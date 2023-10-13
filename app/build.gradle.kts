@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -42,7 +41,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.2"
     }
     packaging {
         resources {
@@ -68,9 +67,6 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    // okhttp, retrofit
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
     // coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     // serialization
@@ -84,7 +80,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     // fragment
     implementation("androidx.fragment:fragment-ktx:1.6.1")
-    // hilt
-    implementation("com.google.dagger:hilt-android:2.48")
-    implementation("com.google.dagger:hilt-compiler:2.48")
+    // kotest
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.7.2")
+    testImplementation("io.kotest:kotest-framework-engine-jvm:5.7.2")
+    // reflection
+    testImplementation("org.jetbrains.kotlin:kotlin-reflect:1.8.21")
+
 }

@@ -1,17 +1,19 @@
 package woowacourse.campus
 
-import org.junit.Test
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
-import org.junit.Assert.*
-
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+class ExampleUnitTest : BehaviorSpec({
+    Given("날씨가 더운 경우") {
+        val samples = List(5) { it }
+        When("에어컨을 끄면") {
+            val actual = samples.firstOrNull()
+            Then("산군이 짜증을 낸다") {
+                println("이것은 kotest 샘플이다 이것이야 - !")
+                actual shouldNotBe null
+                actual.shouldBe(0)
+            }
+        }
     }
-}
+})
