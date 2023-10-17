@@ -17,7 +17,7 @@ tasks.register(
 ) {
     generatorName.set("kotlin")
     // .yaml 파일이 위치하는 경로
-    inputSpec.set("$rootDir/app/src/test/java/woowacourse/campus/TestApi.yaml")
+    inputSpec.set("$rootDir/app/src/main/java/woowacourse/campus/data/CampusApi.yaml")
     // generate된 코드가 위치할 경로
     outputDir.set("$rootDir/network")
     // genertate된 코드가 가질 상위 경로

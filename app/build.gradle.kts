@@ -52,6 +52,7 @@ android {
         unitTests.all {
             it.useJUnitPlatform()
         }
+        unitTests.isReturnDefaultValues = true
     }
 }
 
@@ -78,6 +79,7 @@ dependencies {
     androidTestImplementation("androidx.test.ext:truth:1.5.0")
     // coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     // navigation
     implementation("androidx.navigation:navigation-compose:2.7.4")
     androidTestImplementation("androidx.navigation:navigation-testing:2.7.4")

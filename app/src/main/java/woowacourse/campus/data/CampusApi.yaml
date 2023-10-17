@@ -1,0 +1,276 @@
+openapi: 3.0.3
+info:
+  title: 캠퍼스 플랫폼 API 문서
+  description: 캠퍼스 플랫폼 API 문서입니다.
+  contact:
+    email: woowa
+  version: 1.0.0
+servers:
+  - url: https://api.test.com
+tags:
+  - name: Announcement
+    description: 공지사항
+paths:
+  /api/announcement:
+    post:
+      operationId: createAnnouncement
+      tags:
+        - Announcement
+      summary: 공지 생성
+      description: 사용자가 공지를 생성한다.
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+            example: 'Basic {token}'
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createAnnouncementRequest'
+      responses:
+        201:
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+                example: '/api/announcements/1'
+        401:
+          description: Unauthorized
+        400:
+          description: Bad Request
+  /api/announcement/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+          example: 1
+        required: true
+        description: 공지사항 ID
+    patch:
+      operationId: updateAnnouncement
+      tags:
+        - Announcement
+      summary: 공지 수정
+      description: 사용자가 공지를 수정한다.
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+            example: 'Basic {token}'
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateAnnouncementRequest'
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        400:
+          description: Bad Request
+    delete:
+      operationId: deleteAnnouncement
+      tags:
+        - Announcement
+      summary: 공지 삭제
+      description: 사용자가 공지를 삭제한다
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+            example: 'Basic {token}'
+          required: true
+      responses:
+        204:
+          description: No Content
+        401:
+          description: Unauthorized
+        400:
+          description: Bad Request
+    get:
+      operationId: findAnnouncementById
+      tags:
+        - Announcement
+      summary: 공지 조회
+      description: 사용자가 공지를 조회한다.
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+            example: 'Basic {token}'
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/announcementResponse'
+        401:
+          description: Unauthorized
+        400:
+          description: Bad Request
+  /api/announcement/pagination:
+    parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+          example: 0
+        required: true
+        description: 페이지 번호
+      - in: query
+        name: size
+        schema:
+          type: integer
+          example: 10
+        required: true
+        description: 게시글 개수
+    get:
+      operationId: findAllAnnouncementByPage
+      tags:
+        - Announcement
+      summary: 공지 전체 조회(페이징)
+      description: 사용자가 공지를 전체 조회한다.
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+            example: 'Basic {token}'
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/announcementsByPageResponse'
+        401:
+          description: Unauthorized
+        400:
+          description: Bad Request
+components:
+  schemas:
+    createAnnouncementRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          example: '제목'
+          nullable: false
+          minLength: 1
+          maxLength: 50
+        content:
+          type: string
+          example: '내용'
+          nullable: false
+          minLength: 1
+          maxLength: 65535
+        author:
+          type: string
+          example: '작성자'
+          nullable: false
+          minLength: 1
+          maxLength: 20
+        slackChannel:
+          type: string
+          example: '#5기-캠플폼-잡담'
+          nullable: false
+          minLength: 1
+          maxLength: 50
+      required:
+        - title
+        - content
+        - author
+        - slackChannel
+    updateAnnouncementRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          example: '제목'
+          nullable: false
+          minLength: 1
+          maxLength: 50
+        content:
+          type: string
+          example: '내용'
+          nullable: false
+          minLength: 1
+          maxLength: 65535
+        author:
+          type: string
+          example: '작성자'
+          nullable: false
+          minLength: 1
+          maxLength: 20
+          description: '원본 공지와 작성자가 같아야합니다.'
+      required:
+        - title
+        - content
+        - author
+    announcementResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: '제목'
+          nullable: false
+        content:
+          type: string
+          example: '내용'
+          nullable: false
+        author:
+          type: string
+          example: '작성자'
+          nullable: false
+        createdAt:
+          type: string
+          example: '2021-08-01T00:00:00.000'
+      required:
+        - id
+        - title
+        - content
+        - author
+        - createdAt
+    announcementsByPageResponse:
+      type: object
+      properties:
+        announcements:
+          type: array
+          items:
+            $ref: '#/components/schemas/announcementResponse'
+        page:
+          type: integer
+          example: 0
+        size:
+          type: integer
+          example: 10
+        totalElements:
+          type: integer
+          example: 1
+        totalPages:
+          type: integer
+          example: 1
+      required:
+        - announcements
+        - page
+        - size
+        - totalElements
+        - totalPages
