@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import woowacourse.campus.ui.navigation.BottomNavigationView
 import woowacourse.campus.ui.navigation.NavigationGraph
@@ -28,8 +29,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun MainScreenView() {
-    val navController = rememberNavController()
+internal fun MainScreenView(navController: NavHostController = rememberNavController()) {
     Scaffold(
         bottomBar = { BottomNavigationView(navController = navController) }
     ) {
