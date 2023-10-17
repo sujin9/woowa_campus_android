@@ -48,6 +48,11 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -61,6 +66,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     testImplementation("junit:junit:4.13.2")
+    // mockk
+    testImplementation("io.mockk:mockk:1.12.0")
     implementation(project(":network"))
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -82,7 +89,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.1")
     // kotest
     testImplementation("io.kotest:kotest-assertions-core-jvm:5.7.2")
-    testImplementation("io.kotest:kotest-framework-engine-jvm:5.7.2")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.7.2")
     // reflection
     testImplementation("org.jetbrains.kotlin:kotlin-reflect:1.8.21")
     // ktor
