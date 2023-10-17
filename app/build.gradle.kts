@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
-    id("kotlinx-serialization")
 }
 
 android {
@@ -71,9 +70,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     // coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    // serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-//    implementation("io.ktor:ktor-serialization-kotlinx-json:2.1.3") // retrofit2 -> ktor
     // navigation
     implementation("androidx.navigation:navigation-compose:2.7.4")
     // material
