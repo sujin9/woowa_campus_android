@@ -10,5 +10,4 @@ internal fun HomeScreen() {
         text = "ㅎㅇ",
         color = Color.Black
     )
-
 }
