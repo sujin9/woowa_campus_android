@@ -87,8 +87,6 @@ dependencies {
     implementation("androidx.compose.material:material:1.5.3")
     // view model
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    // fragment
-    implementation("androidx.fragment:fragment-ktx:1.6.1")
     // kotest
     testImplementation("io.kotest:kotest-assertions-core-jvm:5.7.2")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.7.2")
@@ -102,4 +100,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("io.ktor:ktor-client-gson:2.1.3")
     implementation("io.ktor:ktor-serialization-gson:2.1.3")
+    // koin
+    implementation("io.insert-koin:koin-android:3.5.0")
+    implementation("io.insert-koin:koin-androidx-compose:3.5.0")
 }
