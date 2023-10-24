@@ -3,13 +3,13 @@ package woowacourse.campus.ui.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -63,9 +63,16 @@ private fun AnnouncementList() {
                     color = MaterialTheme.colorScheme.surfaceVariant,
                     shape = RoundedCornerShape(10.dp),
                 ),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
         ) {
             items(3) { // view model 에서 받아온 데이터로 변경
+                if (it != 0) {
+                    Divider(
+                        thickness = 1.dp,
+                        color = MaterialTheme.colorScheme.outlineVariant,
+                        modifier = Modifier
+                            .padding(horizontal = 12.dp)
+                    )
+                }
                 AnnouncementListItem("공지 $it 입니다", "내용 $it 입니다")
             }
         }
@@ -79,13 +86,14 @@ private fun AnnouncementListItem(
 ) {
     Column(
         modifier = Modifier
-            .padding(vertical = 6.dp)
+            .padding(vertical = 16.dp, horizontal = 20.dp)
     ) {
         Text(
             text = title,
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+        Spacer(modifier = Modifier.padding(4.dp))
         Text(
             text = content,
             style = MaterialTheme.typography.titleSmall,
