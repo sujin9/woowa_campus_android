@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,10 +30,10 @@ import woowacourse.campus.R
 internal fun HomeScreen() {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.Blue),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        AttendanceStatusBoard()
         Spacer(modifier = Modifier.padding(12.dp))
         AnnouncementList()
         Spacer(modifier = Modifier.padding(18.dp))
@@ -41,12 +42,26 @@ internal fun HomeScreen() {
 }
 
 @Composable
+fun AttendanceStatusBoard() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+            .background(
+                color = Color.DarkGray,
+                shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp),
+            )
+    ) {
+
+    }
+}
+
+@Composable
 private fun AnnouncementList() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
-            .background(Color.Red),
+            .padding(horizontal = 20.dp),
     ) {
         Row(
             modifier = Modifier
@@ -112,8 +127,7 @@ private fun ShortcutList() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp)
-            .background(Color.Green),
+            .padding(start = 20.dp),
     ) {
         HomeContentTitle(stringResource(R.string.home_shortcuts))
         Spacer(modifier = Modifier.padding(8.dp))
