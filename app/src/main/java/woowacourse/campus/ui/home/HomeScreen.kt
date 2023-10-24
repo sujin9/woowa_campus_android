@@ -1,20 +1,41 @@
 package woowacourse.campus.ui.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun HomeScreen() {
-    AnnouncementList()
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        AnnouncementList()
+    }
 }
 
 @Composable
 private fun AnnouncementList() {
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth(0.86f)
+            .background(
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                shape = RoundedCornerShape(10.dp),
+            ),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+    ) {
         items(3) { // view model 에서 받아온 데이터로 변경
             AnnouncementListItem("공지 $it 입니다", "내용 $it 입니다")
         }
@@ -26,7 +47,10 @@ private fun AnnouncementListItem(
     title: String,
     content: String,
 ) {
-    Column {
+    Column(
+        modifier = Modifier
+            .padding(vertical = 6.dp)
+    ) {
         Text(
             text = title,
             style = MaterialTheme.typography.titleMedium,
