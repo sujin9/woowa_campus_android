@@ -1,8 +1,11 @@
 package woowacourse.campus.ui.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,8 +15,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.campus.R
 
 @Composable
 internal fun HomeScreen() {
@@ -27,17 +33,41 @@ internal fun HomeScreen() {
 
 @Composable
 private fun AnnouncementList() {
-    LazyColumn(
+    Column(
         modifier = Modifier
-            .fillMaxWidth(0.86f)
-            .background(
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                shape = RoundedCornerShape(10.dp),
-            ),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        items(3) { // view model 에서 받아온 데이터로 변경
-            AnnouncementListItem("공지 $it 입니다", "내용 $it 입니다")
+        Spacer(modifier = Modifier.padding(12.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(0.86f),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = stringResource(R.string.home_announcement),
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(modifier = Modifier.padding(2.dp))
+            Image(
+                painter = painterResource(id = R.drawable.ic_arrow_next),
+                contentDescription = stringResource(R.string.home_announcement_description),
+            )
+        }
+        Spacer(modifier = Modifier.padding(8.dp))
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth(0.86f)
+                .background(
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    shape = RoundedCornerShape(10.dp),
+                ),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+        ) {
+            items(3) { // view model 에서 받아온 데이터로 변경
+                AnnouncementListItem("공지 $it 입니다", "내용 $it 입니다")
+            }
         }
     }
 }
