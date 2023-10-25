@@ -10,9 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,16 +32,26 @@ import woowacourse.campus.R
 internal fun HomeScreen(
     homeViewModel: HomeViewModel = koinViewModel(),
 ) {
+    val scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         AttendanceStatusBoard()
-        Spacer(modifier = Modifier.padding(12.dp))
-        AnnouncementList()
-        Spacer(modifier = Modifier.padding(18.dp))
-        ShortcutList()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(scrollState),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Spacer(modifier = Modifier.padding(12.dp))
+            AnnouncementList()
+            Spacer(modifier = Modifier.padding(18.dp))
+            ShortcutList()
+            Spacer(modifier = Modifier.padding(32.dp))
+        }
     }
 }
 
@@ -79,7 +90,7 @@ private fun AnnouncementList() {
             )
         }
         Spacer(modifier = Modifier.padding(8.dp))
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
@@ -87,7 +98,7 @@ private fun AnnouncementList() {
                     shape = RoundedCornerShape(10.dp),
                 ),
         ) {
-            items(3) { // view model 에서 받아온 데이터로 변경
+            repeat(3) { // view model 에서 받아온 데이터로 변경
                 if (it != 0) {
                     Divider(
                         thickness = 1.dp,
