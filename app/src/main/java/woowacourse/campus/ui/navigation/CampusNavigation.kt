@@ -15,31 +15,32 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import woowacourse.campus.R
+import woowacourse.campus.ui.announcement.board.AnnouncementBoardScreen
 import woowacourse.campus.ui.home.HomeScreen
-import woowacourse.campus.ui.mypage.MyPageScreen
+import woowacourse.campus.ui.myPage.MyPageScreen
 
 @Composable
-internal fun BottomNavigationView(navController: NavHostController) {
+internal fun BottomNavigationView(navController: CampusNavController) {
     val items = listOf(BottomNavItem.Home, BottomNavItem.MyPage)
 
     BottomNavigation(
         backgroundColor = Color.White,
         contentColor = Color.Green
     ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val navBackStackEntry by navController.navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
         items.forEach { item ->
             BottomNavigationItem(
                 selected = currentRoute == item.screenRoute,
                 onClick = {
-                    navController.navigate(item.screenRoute) {
-                        navController.graph.startDestinationRoute?.let {
+                    // TODO: navController 로 옮기기
+                    navController.navController.navigate(item.screenRoute) {
+                        navController.navController.graph.startDestinationRoute?.let {
                             popUpTo(it) { saveState = true }
                         }
                         launchSingleTop = true
@@ -66,13 +67,19 @@ internal fun BottomNavigationView(navController: NavHostController) {
 
 
 @Composable
-internal fun NavigationGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = BottomNavItem.Home.screenRoute) {
+internal fun NavigationGraph(navController: CampusNavController) {
+    NavHost(
+        navController = navController.navController,
+        startDestination = BottomNavItem.Home.screenRoute
+    ) {
         composable(BottomNavItem.Home.screenRoute) {
-            HomeScreen()
+            HomeScreen { navController.navigateToAnnouncementBoard() }
         }
         composable(BottomNavItem.MyPage.screenRoute) {
             MyPageScreen()
+        }
+        composable("AnnouncementBoard") {
+            AnnouncementBoardScreen()
         }
     }
 }
@@ -82,5 +89,5 @@ sealed class BottomNavItem(
 ) {
     data object Home : BottomNavItem(R.string.bottom_navigation_home, R.drawable.ic_home, "Home")
     data object MyPage :
-        BottomNavItem(R.string.bottom_navigation_mypage, R.drawable.ic_my_page, "MyPage")
+        BottomNavItem(R.string.bottom_navigation_my_page, R.drawable.ic_my_page, "MyPage")
 }

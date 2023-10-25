@@ -3,7 +3,7 @@
 
     <!-- bottom_navigation -->
     <string name="bottom_navigation_home">홈</string>
-    <string name="bottom_navigation_mypage">마이페이지</string>
+    <string name="bottom_navigation_my_page">마이페이지</string>
 
     <!-- home screen -->
     <string name="home_announcement">공지사항</string>

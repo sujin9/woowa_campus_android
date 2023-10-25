@@ -1,4 +1,4 @@
-package woowacourse.campus.ui.mypage
+package woowacourse.campus.ui.myPage
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

@@ -2,6 +2,7 @@ package woowacourse.campus.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,6 +32,7 @@ import woowacourse.campus.R
 @Composable
 internal fun HomeScreen(
     homeViewModel: HomeViewModel = koinViewModel(),
+    onClickAnnouncementBoard: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -47,7 +49,7 @@ internal fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.padding(12.dp))
-            AnnouncementList()
+            AnnouncementList(onClickAnnouncementBoard)
             Spacer(modifier = Modifier.padding(18.dp))
             ShortcutList()
             Spacer(modifier = Modifier.padding(32.dp))
@@ -71,7 +73,7 @@ fun AttendanceStatusBoard() {
 }
 
 @Composable
-private fun AnnouncementList() {
+private fun AnnouncementList(onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -79,11 +81,12 @@ private fun AnnouncementList() {
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .clickable { onClick() },
             verticalAlignment = Alignment.CenterVertically,
         ) {
             HomeContentTitle(stringResource(R.string.home_announcement))
-            Spacer(modifier = Modifier.padding(2.dp))
+            Spacer(modifier = Modifier.padding(4.dp))
             Image(
                 painter = painterResource(id = R.drawable.ic_arrow_next),
                 contentDescription = stringResource(R.string.home_announcement_description),
@@ -194,5 +197,5 @@ private fun HomeContentTitle(title: String) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen {}
 }
