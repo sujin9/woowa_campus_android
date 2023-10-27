@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import woowacourse.campus.R
 import woowacourse.campus.ui.announcement.board.AnnouncementBoardScreen
+import woowacourse.campus.ui.announcement.detail.AnnouncementDetailScreen
 import woowacourse.campus.ui.home.HomeScreen
 import woowacourse.campus.ui.myPage.MyPageScreen
 
@@ -73,13 +74,19 @@ internal fun NavigationGraph(navController: CampusNavController) {
         startDestination = BottomNavItem.Home.screenRoute
     ) {
         composable(BottomNavItem.Home.screenRoute) {
-            HomeScreen { navController.navigateToAnnouncementBoard() }
+            HomeScreen(
+                onClickAnnouncementBoard = { navController.navigateToAnnouncementBoard() },
+                onClickAnnouncementItem = { navController.navigateToAnnouncementDetail() }
+            )
         }
         composable(BottomNavItem.MyPage.screenRoute) {
             MyPageScreen()
         }
         composable("AnnouncementBoard") {
             AnnouncementBoardScreen()
+        }
+        composable("AnnouncementDetail") {
+            AnnouncementDetailScreen()
         }
     }
 }

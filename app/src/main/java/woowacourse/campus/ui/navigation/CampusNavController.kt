@@ -16,6 +16,10 @@ class CampusNavController(
         navController.navigate("AnnouncementBoard")
     }
 
+    fun navigateToAnnouncementDetail() {
+        navController.navigate("AnnouncementDetail")
+    }
+
     @Composable
     fun isBottomBarVisible() = when (currentDestination?.route) {
         BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute -> true
