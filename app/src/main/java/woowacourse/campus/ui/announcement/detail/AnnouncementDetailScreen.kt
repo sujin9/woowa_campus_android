@@ -37,7 +37,7 @@ internal fun AnnouncementDetailScreen() {
         // TODO: view model에서 받아온 값으로 대체
         val fakeTitle = "6기 우아한테크코스에 오신 것을 환영합니다! 꼭 읽어주세요 !"
         var fakeContent = ""
-        repeat(30) { fakeContent += "안녕하세요. 6기 여러분.\n여러분 모두 민트를 봐주세요.\n" }
+        repeat(20) { fakeContent += "안녕하세요. 6기 여러분.\n여러분 모두 민트를 봐주세요.\n\n" }
 
         AnnouncementInfoHeader("6기-공지사항", "하티", "2023.10.12 16:59")
         AnnouncementContent(fakeTitle, fakeContent)
@@ -51,7 +51,7 @@ fun AnnouncementInfoHeader(channel: String, author: String, createdAt: String) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(32.dp)
-            .height(IntrinsicSize.Min)
+            .height(IntrinsicSize.Min),
     ) {
         HeaderText(channel)
         VerticalDivider()
@@ -66,7 +66,7 @@ private fun HeaderText(text: String) {
     Text(
         text = text,
         style = MaterialTheme.typography.titleMedium,
-        color = MaterialTheme.colorScheme.onSurface
+        color = MaterialTheme.colorScheme.onSurface,
     )
 }
 
@@ -77,7 +77,7 @@ private fun VerticalDivider() {
             .fillMaxHeight()
             .padding(horizontal = 8.dp)
             .width(2.dp)
-            .background(color = MaterialTheme.colorScheme.onSurface)
+            .background(color = MaterialTheme.colorScheme.onSurface),
     )
 }
 
@@ -91,7 +91,7 @@ fun AnnouncementContent(title: String, content: String) {
             .background(
                 color = MaterialTheme.colorScheme.surfaceVariant,
                 shape = RoundedCornerShape(10.dp),
-            )
+            ),
     ) {
         Text(
             text = title,
@@ -105,7 +105,7 @@ fun AnnouncementContent(title: String, content: String) {
             thickness = 1.dp,
             color = MaterialTheme.colorScheme.outlineVariant,
             modifier = Modifier
-                .padding(horizontal = 12.dp)
+                .padding(horizontal = 12.dp),
         )
 
         Text(

@@ -20,18 +20,21 @@ val Typography = Typography(
         fontFamily = hannaFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 22.sp,
-        platformStyle = PlatformTextStyle(includeFontPadding = false)
+        platformStyle = PlatformTextStyle(includeFontPadding = false),
+        lineHeight = 24.sp,
     ),
     titleMedium = TextStyle(
         fontFamily = hannaFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
-        platformStyle = PlatformTextStyle(includeFontPadding = false)
+        platformStyle = PlatformTextStyle(includeFontPadding = false),
+        lineHeight = 22.sp,
     ),
     titleSmall = TextStyle(
         fontFamily = hannaFontFamily,
         fontWeight = FontWeight.Light,
         fontSize = 16.sp,
-        platformStyle = PlatformTextStyle(includeFontPadding = false)
-    )
+        platformStyle = PlatformTextStyle(includeFontPadding = false),
+        lineHeight = 20.sp,
+    ),
 )
