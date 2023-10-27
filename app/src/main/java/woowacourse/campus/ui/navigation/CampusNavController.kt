@@ -25,4 +25,10 @@ class CampusNavController(
         BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute -> true
         else -> false
     }
+
+    @Composable
+    fun isTopAppBarVisible() = when (currentDestination?.route) {
+        BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute -> false
+        else -> true
+    }
 }
