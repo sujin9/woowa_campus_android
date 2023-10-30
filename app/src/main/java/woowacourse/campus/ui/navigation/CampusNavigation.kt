@@ -34,7 +34,7 @@ internal fun TopAppBarView(navController: CampusNavController) {
     CenterAlignedTopAppBar(title = {
         currentRoute?.let {
             Text(
-                text = it, // string을 어디서 주입할지
+                text = it,
                 color = MaterialTheme.colorScheme.surfaceVariant,
             )
         }
@@ -98,10 +98,10 @@ internal fun NavigationGraph(navController: CampusNavController) {
         composable(BottomNavItem.MyPage.screenRoute) {
             MyPageScreen()
         }
-        composable("AnnouncementBoard") {
-            AnnouncementBoardScreen()
+        composable("공지사항") { // TODO: string resource
+            AnnouncementBoardScreen { navController.navigateToAnnouncementDetail() }
         }
-        composable("AnnouncementDetail") {
+        composable("상세보기") {
             AnnouncementDetailScreen()
         }
     }
