@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,8 +22,24 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import woowacourse.campus.R
 import woowacourse.campus.ui.announcement.board.AnnouncementBoardScreen
+import woowacourse.campus.ui.announcement.detail.AnnouncementDetailScreen
 import woowacourse.campus.ui.home.HomeScreen
 import woowacourse.campus.ui.myPage.MyPageScreen
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+internal fun TopAppBarView(navController: CampusNavController) {
+    val navBackStackEntry by navController.navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+    CenterAlignedTopAppBar(title = {
+        currentRoute?.let {
+            Text(
+                text = it, // string을 어디서 주입할지
+                color = MaterialTheme.colorScheme.surfaceVariant,
+            )
+        }
+    })
+}
 
 @Composable
 internal fun BottomNavigationView(navController: CampusNavController) {
@@ -29,7 +47,7 @@ internal fun BottomNavigationView(navController: CampusNavController) {
 
     BottomNavigation(
         backgroundColor = Color.White,
-        contentColor = Color.Green
+        contentColor = Color.Green,
     ) {
         val navBackStackEntry by navController.navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -53,11 +71,11 @@ internal fun BottomNavigationView(navController: CampusNavController) {
                         contentDescription = stringResource(id = item.title),
                         modifier = Modifier
                             .width(20.dp)
-                            .height(20.dp)
+                            .height(20.dp),
                     )
                 },
                 label = { Text(stringResource(id = item.title), fontSize = 9.sp) },
-                selectedContentColor = MaterialTheme.colors.primary,
+                selectedContentColor = MaterialTheme.colorScheme.primary,
                 unselectedContentColor = Color.Gray,
                 alwaysShowLabel = false,
             )
@@ -65,15 +83,17 @@ internal fun BottomNavigationView(navController: CampusNavController) {
     }
 }
 
-
 @Composable
 internal fun NavigationGraph(navController: CampusNavController) {
     NavHost(
         navController = navController.navController,
-        startDestination = BottomNavItem.Home.screenRoute
+        startDestination = BottomNavItem.Home.screenRoute,
     ) {
         composable(BottomNavItem.Home.screenRoute) {
-            HomeScreen { navController.navigateToAnnouncementBoard() }
+            HomeScreen(
+                onClickAnnouncementBoard = { navController.navigateToAnnouncementBoard() },
+                onClickAnnouncementItem = { navController.navigateToAnnouncementDetail() },
+            )
         }
         composable(BottomNavItem.MyPage.screenRoute) {
             MyPageScreen()
@@ -81,11 +101,16 @@ internal fun NavigationGraph(navController: CampusNavController) {
         composable("AnnouncementBoard") {
             AnnouncementBoardScreen()
         }
+        composable("AnnouncementDetail") {
+            AnnouncementDetailScreen()
+        }
     }
 }
 
 sealed class BottomNavItem(
-    val title: Int, val icon: Int, val screenRoute: String,
+    val title: Int,
+    val icon: Int,
+    val screenRoute: String,
 ) {
     data object Home : BottomNavItem(R.string.bottom_navigation_home, R.drawable.ic_home, "Home")
     data object MyPage :

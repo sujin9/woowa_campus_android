@@ -33,6 +33,7 @@ import woowacourse.campus.R
 internal fun HomeScreen(
     homeViewModel: HomeViewModel = koinViewModel(),
     onClickAnnouncementBoard: () -> Unit,
+    onClickAnnouncementItem: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -49,7 +50,7 @@ internal fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.padding(12.dp))
-            AnnouncementList(onClickAnnouncementBoard)
+            AnnouncementList(onClickAnnouncementBoard, onClickAnnouncementItem)
             Spacer(modifier = Modifier.padding(18.dp))
             ShortcutList()
             Spacer(modifier = Modifier.padding(32.dp))
@@ -73,7 +74,7 @@ fun AttendanceStatusBoard() {
 }
 
 @Composable
-private fun AnnouncementList(onClick: () -> Unit) {
+private fun AnnouncementList(onClick: () -> Unit, onItemClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -110,7 +111,7 @@ private fun AnnouncementList(onClick: () -> Unit) {
                             .padding(horizontal = 12.dp)
                     )
                 }
-                AnnouncementListItem("공지 $it 입니다", "내용 $it 입니다")
+                AnnouncementListItem("공지 $it 입니다", "내용 $it 입니다", onItemClick)
             }
         }
     }
@@ -120,10 +121,13 @@ private fun AnnouncementList(onClick: () -> Unit) {
 private fun AnnouncementListItem(
     title: String,
     content: String,
+    onClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
+            .fillMaxWidth()
             .padding(vertical = 16.dp, horizontal = 20.dp)
+            .clickable { onClick() },
     ) {
         Text(
             text = title,
@@ -197,5 +201,5 @@ private fun HomeContentTitle(title: String) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun HomeScreenPreview() {
-    HomeScreen {}
+    HomeScreen(onClickAnnouncementBoard = {}, onClickAnnouncementItem = {})
 }

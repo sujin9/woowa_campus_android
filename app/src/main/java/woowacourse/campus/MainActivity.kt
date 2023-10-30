@@ -19,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import woowacourse.campus.ui.navigation.BottomNavigationView
 import woowacourse.campus.ui.navigation.CampusNavController
 import woowacourse.campus.ui.navigation.NavigationGraph
+import woowacourse.campus.ui.navigation.TopAppBarView
 import woowacourse.campus.ui.theme.WoowaCampusTheme
 
 class MainActivity : ComponentActivity() {
@@ -42,13 +43,18 @@ internal fun MainScreenView(
             if (navController.isBottomBarVisible()) {
                 BottomNavigationView(navController = navController)
             }
-        }
+        },
+        topBar = {
+            if (navController.isTopAppBarVisible()) {
+                TopAppBarView(navController)
+            }
+        },
     ) {
         Box(
             Modifier
                 .padding(it)
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
+                .background(MaterialTheme.colorScheme.background),
         ) {
             NavigationGraph(navController = navController)
         }
@@ -61,7 +67,6 @@ fun rememberCampusNavController(navController: NavHostController = rememberNavCo
         CampusNavController(navController)
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
