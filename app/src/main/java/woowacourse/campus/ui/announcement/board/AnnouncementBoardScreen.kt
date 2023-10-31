@@ -15,40 +15,57 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.koin.androidx.compose.koinViewModel
 import woowacourse.campus.ui.common.VerticalDivider
 
 @Composable
 internal fun AnnouncementBoardScreen(
+    announcementBoardViewModel: AnnouncementBoardViewModel = koinViewModel(),
     onAnnouncementItemClick: () -> Unit,
 ) {
+    val uiState: AnnouncementBoardUiState by announcementBoardViewModel.uiState.collectAsStateWithLifecycle()
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AnnouncementList(onAnnouncementItemClick)
+        AnnouncementList(uiState, onAnnouncementItemClick)
     }
 }
 
 @Composable
-private fun AnnouncementList(onAnnouncementItemClick: () -> Unit) {
+private fun AnnouncementList(
+    uiState: AnnouncementBoardUiState,
+    onAnnouncementItemClick: () -> Unit
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 6.dp),
     ) {
-        items(20) {
-            AnnouncementListItem(
-                "6기 전체공지사항입니다.,.............전체공지사항..................",
-                "6기 - 공지사항",
-                "하티",
-                "2022.01.04 15:42:33",
-                onAnnouncementItemClick,
-            )
+        when (uiState) {
+            is AnnouncementBoardUiState.Success -> {
+                uiState.announcements.forEach {
+                    item {
+                        AnnouncementListItem(
+                            title = it.title,
+                            channel = "6기 - 안드로이드",
+                            author = it.author,
+                            date = it.createdAt,
+                            onAnnouncementItemClick = onAnnouncementItemClick,
+                        )
+                    }
+                }
+            }
+
+            is AnnouncementBoardUiState.Loading -> {}
         }
     }
 }

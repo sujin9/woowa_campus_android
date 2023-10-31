@@ -7,8 +7,6 @@ import woowacourse.campus.data.model.AnnouncementsByPageEntity
 
 object AnnouncementDataMapper {
 
-
-
     fun AnnouncementsByPageResponse.toEntity() = AnnouncementsByPageEntity(
         announcements = announcements.map { it.toEntity() },
         page = page,

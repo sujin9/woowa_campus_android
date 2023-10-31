@@ -9,6 +9,7 @@ import woowacourse.campus.data.model.AnnouncementsByPageEntity
 class AnnouncementRepository(
     private val api: GetAllAnnouncementApi,
 ) {
+
     fun getAnnouncements(page: Int): AnnouncementsByPageEntity {
         return getFixture(page, 10, "password")
             .toEntity()
@@ -40,6 +41,13 @@ class AnnouncementRepository(
         private val pageFixture: List<AnnouncementsByPageResponse> = listOf(
             AnnouncementsByPageResponse(
                 announcements = List(10) { announcementFixture },
+                page = 0,
+                propertySize = 0,
+                totalElements = 0,
+                totalPages = 0
+            ),
+            AnnouncementsByPageResponse(
+                announcements = List(10) { announcementFixture },
                 page = 1,
                 propertySize = 0,
                 totalElements = 0,
@@ -48,13 +56,6 @@ class AnnouncementRepository(
             AnnouncementsByPageResponse(
                 announcements = List(10) { announcementFixture },
                 page = 2,
-                propertySize = 0,
-                totalElements = 0,
-                totalPages = 0
-            ),
-            AnnouncementsByPageResponse(
-                announcements = List(10) { announcementFixture },
-                page = 3,
                 propertySize = 0,
                 totalElements = 0,
                 totalPages = 0
