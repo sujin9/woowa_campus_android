@@ -3,6 +3,7 @@ package woowacourse.campus.ui.announcement.board
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -22,17 +23,19 @@ import androidx.compose.ui.unit.dp
 import woowacourse.campus.ui.common.VerticalDivider
 
 @Composable
-internal fun AnnouncementBoardScreen() {
+internal fun AnnouncementBoardScreen(
+    onAnnouncementItemClick: () -> Unit,
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AnnouncementList()
+        AnnouncementList(onAnnouncementItemClick)
     }
 }
 
 @Composable
-private fun AnnouncementList() {
+private fun AnnouncementList(onAnnouncementItemClick: () -> Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,6 +47,7 @@ private fun AnnouncementList() {
                 "6기 - 공지사항",
                 "하티",
                 "2022.01.04 15:42:33",
+                onAnnouncementItemClick,
             )
         }
     }
@@ -55,6 +59,7 @@ private fun AnnouncementListItem(
     channel: String,
     author: String,
     date: String,
+    onAnnouncementItemClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -74,7 +79,8 @@ private fun AnnouncementListItem(
             .height(
                 intrinsicSize = IntrinsicSize.Min,
             )
-            .padding(all = 16.dp),
+            .padding(all = 16.dp)
+            .clickable { onAnnouncementItemClick() },
     ) {
         Text(
             text = title,
@@ -112,5 +118,5 @@ private fun AnnouncementListItem(
 @Preview(showSystemUi = true)
 @Composable
 private fun AnnouncementBoardScreenPreview() {
-    AnnouncementBoardScreen()
+    AnnouncementBoardScreen {}
 }

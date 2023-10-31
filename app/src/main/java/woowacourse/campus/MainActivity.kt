@@ -46,7 +46,7 @@ internal fun MainScreenView(
         },
         topBar = {
             if (navController.isTopAppBarVisible()) {
-                TopAppBarView(navController)
+                TopAppBarView(navController = navController)
             }
         },
     ) {
