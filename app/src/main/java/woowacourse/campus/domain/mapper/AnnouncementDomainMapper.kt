@@ -9,6 +9,6 @@ object AnnouncementDomainMapper {
     fun AnnouncementPageEntity.toDomain() = AnnouncementPage(
         id = id,
         title = title,
-        createdAt = LocalDateTime.parse(createdAt),
+        createdAt = createdAt,
     )
 }

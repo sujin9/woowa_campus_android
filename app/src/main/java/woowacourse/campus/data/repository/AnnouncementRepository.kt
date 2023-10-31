@@ -33,6 +33,10 @@ class AnnouncementRepository(
             )
         }
 
+        private val announcementFixture: AnnouncementPageResponse = AnnouncementPageResponse(
+            id = 0, title = "6기 공지사항", author = "하티", createdAt = "11.22 15:33:21"
+        )
+
         private val pageFixture: List<AnnouncementsByPageResponse> = listOf(
             AnnouncementsByPageResponse(
                 announcements = List(10) { announcementFixture },
@@ -55,10 +59,6 @@ class AnnouncementRepository(
                 totalElements = 0,
                 totalPages = 0
             )
-        )
-
-        private val announcementFixture: AnnouncementPageResponse = AnnouncementPageResponse(
-            id = 0, title = "6기 공지사항", author = "하티", createdAt = ""
         )
     }
 }
