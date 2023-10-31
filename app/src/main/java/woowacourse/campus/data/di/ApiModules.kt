@@ -1,8 +1,8 @@
 package woowacourse.campus.data.di
 
-import api.AnnouncementApi
+import api.GetAllAnnouncementApi
 import org.koin.dsl.module
 
 val apiModules = module {
-    single { AnnouncementApi() }
+    single { GetAllAnnouncementApi() }
 }

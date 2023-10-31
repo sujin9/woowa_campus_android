@@ -2,9 +2,8 @@ package woowacourse.campus.domain.model
 
 import java.time.LocalDateTime
 
-data class Announcement(
+data class AnnouncementPage(
     val id: Long,
     val title: String,
-    val content: String,
     val createdAt: LocalDateTime,
 )
