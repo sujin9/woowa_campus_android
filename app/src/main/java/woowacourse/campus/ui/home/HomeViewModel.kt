@@ -11,11 +11,11 @@ class HomeViewModel(
 ) : ViewModel() {
     val uiState = MutableLiveData<HomeUiState>()
 
-    init {
-        viewModelScope.launch {
-            uiState.value = HomeUiState(
-                latestAnnouncements = getLatestAnnouncementsUseCase()
-            )
-        }
-    }
+//    init {
+//        viewModelScope.launch {
+//            uiState.value = HomeUiState(
+//                latestAnnouncements = getLatestAnnouncementsUseCase()
+//            )
+//        }
+//    }
 }

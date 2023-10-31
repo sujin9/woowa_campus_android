@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import woowacourse.campus.ui.login.LoginScreenView
 import woowacourse.campus.ui.navigation.BottomNavigationView
 import woowacourse.campus.ui.navigation.CampusNavController
 import woowacourse.campus.ui.navigation.NavigationGraph
@@ -27,7 +28,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             WoowaCampusTheme {
-                MainScreenView()
+                LoginScreenView()
+                // MainScreenView()
             }
         }
     }
