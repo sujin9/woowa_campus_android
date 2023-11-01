@@ -1,5 +1,6 @@
 package woowacourse.campus.data.repository
 
+import android.util.Log
 import api.GetAllAnnouncementApi
 import api.GetAnnouncementApi
 import model.AnnouncementPageResponse
@@ -19,14 +20,14 @@ class AnnouncementRepository(
             .toEntity()
     }
 
-    fun getAnnouncementById(announcementId: Int): AnnouncementEntity {
+    fun getAnnouncementById(announcementId: Long): AnnouncementEntity {
         return getAnnouncement(announcementId, "password").toEntity()
     }
 
     companion object {
 
         fun getAnnouncement(
-            id: Int = 0,
+            id: Long = 0,
             authorization: String = ""
         ) = announcementDetailFixture
 

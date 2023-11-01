@@ -29,8 +29,10 @@ import woowacourse.campus.ui.common.VerticalDivider
 
 @Composable
 internal fun AnnouncementDetailScreen(
+    id: Long,
     announcementDetailViewModel: AnnouncementDetailViewModel = koinViewModel()
 ) {
+    announcementDetailViewModel.updateUiState(id)
     val scrollState = rememberScrollState()
     val uiState: AnnouncementDetailUiState by announcementDetailViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -126,5 +128,5 @@ fun AnnouncementContent(title: String, content: String) {
 @Preview(showSystemUi = true)
 @Composable
 private fun AnnouncementDetailPreview() {
-    AnnouncementDetailScreen()
+    AnnouncementDetailScreen(id = 0)
 }

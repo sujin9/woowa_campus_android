@@ -8,7 +8,7 @@ class GetAnnouncementByIdUseCase(
     private val announcementRepository: AnnouncementRepository
 ) {
 
-    operator fun invoke(announcementId: Int): Announcement {
+    operator fun invoke(announcementId: Long): Announcement {
         return announcementRepository.getAnnouncementById(announcementId).toDomain()
     }
 }

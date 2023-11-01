@@ -16,11 +16,7 @@ class AnnouncementDetailViewModel(
         MutableStateFlow(AnnouncementDetailUiState.Loading)
     val uiState: StateFlow<AnnouncementDetailUiState> = _uiState.asStateFlow()
 
-    init {
-        updateUiState(1)
-    }
-
-    fun updateUiState(announcementId: Int) {
+    fun updateUiState(announcementId: Long) {
         viewModelScope.launch {
             runCatching {
                 getAnnouncementByIdUseCase(announcementId)

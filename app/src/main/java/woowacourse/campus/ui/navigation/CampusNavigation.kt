@@ -124,8 +124,8 @@ internal fun NavigationGraph(navController: CampusNavController) {
                 type = NavType.LongType
             }
         )) {
-            it.arguments?.getLong("/{announcementId}")
-            AnnouncementDetailScreen()
+            val arg = it.arguments?.getLong("/{announcementId}") ?: 0
+            AnnouncementDetailScreen(id = arg)
         }
     }
 }
