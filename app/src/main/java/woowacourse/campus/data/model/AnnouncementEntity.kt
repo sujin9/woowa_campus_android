@@ -1,6 +1,6 @@
-package woowacourse.campus.domain.model
+package woowacourse.campus.data.model
 
-data class Announcement(
+data class AnnouncementEntity(
     val id: Int,
     val title: String,
     val content: String,

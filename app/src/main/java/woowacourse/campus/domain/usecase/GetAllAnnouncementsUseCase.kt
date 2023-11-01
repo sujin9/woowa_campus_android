@@ -4,18 +4,17 @@ import woowacourse.campus.data.mapper.AnnouncementDomainMapper.toDomain
 import woowacourse.campus.data.repository.AnnouncementRepository
 import woowacourse.campus.domain.model.AnnouncementPage
 
-class GetLatestAnnouncementsUseCase(
+class GetAllAnnouncementsUseCase(
     private val announcementRepository: AnnouncementRepository,
 ) {
+    private var index = 0
+
     operator fun invoke(): List<AnnouncementPage> {
-        announcementRepository.getAnnouncements(1).let { announcements ->
+        announcementRepository.getAnnouncements(index).let { announcements ->
             return announcements.announcements
-                .take(3)
                 .map {
                     it.toDomain()
                 }
         }
     }
 }
-
-
