@@ -3,6 +3,7 @@ package woowacourse.campus.ui.announcement.board
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -14,37 +15,57 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.koin.androidx.compose.koinViewModel
 import woowacourse.campus.ui.common.VerticalDivider
 
 @Composable
-internal fun AnnouncementBoardScreen() {
+internal fun AnnouncementBoardScreen(
+    announcementBoardViewModel: AnnouncementBoardViewModel = koinViewModel(),
+    onAnnouncementItemClick: (announcementId: Long) -> Unit,
+) {
+    val uiState: AnnouncementBoardUiState by announcementBoardViewModel.uiState.collectAsStateWithLifecycle()
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AnnouncementList()
+        AnnouncementList(uiState, onAnnouncementItemClick)
     }
 }
 
 @Composable
-private fun AnnouncementList() {
+private fun AnnouncementList(
+    uiState: AnnouncementBoardUiState,
+    onAnnouncementItemClick: (announcementId: Long) -> Unit
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 6.dp),
     ) {
-        items(20) {
-            AnnouncementListItem(
-                "6기 전체공지사항입니다.,.............전체공지사항..................",
-                "6기 - 공지사항",
-                "하티",
-                "2022.01.04 15:42:33",
-            )
+        when (uiState) {
+            is AnnouncementBoardUiState.Success -> {
+                uiState.announcements.forEach {
+                    item {
+                        AnnouncementListItem(
+                            title = it.title,
+                            channel = "6기 - 안드로이드",
+                            author = it.author,
+                            date = it.createdAt,
+                            onAnnouncementItemClick = { onAnnouncementItemClick(it.id) },
+                        )
+                    }
+                }
+            }
+
+            is AnnouncementBoardUiState.Loading -> {}
         }
     }
 }
@@ -55,6 +76,7 @@ private fun AnnouncementListItem(
     channel: String,
     author: String,
     date: String,
+    onAnnouncementItemClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -74,7 +96,8 @@ private fun AnnouncementListItem(
             .height(
                 intrinsicSize = IntrinsicSize.Min,
             )
-            .padding(all = 16.dp),
+            .padding(all = 16.dp)
+            .clickable { onAnnouncementItemClick() },
     ) {
         Text(
             text = title,
@@ -112,5 +135,5 @@ private fun AnnouncementListItem(
 @Preview(showSystemUi = true)
 @Composable
 private fun AnnouncementBoardScreenPreview() {
-    AnnouncementBoardScreen()
+    AnnouncementBoardScreen {}
 }

@@ -18,15 +18,23 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.koin.androidx.compose.koinViewModel
 import woowacourse.campus.ui.common.VerticalDivider
 
 @Composable
-internal fun AnnouncementDetailScreen() {
+internal fun AnnouncementDetailScreen(
+    id: Long,
+    announcementDetailViewModel: AnnouncementDetailViewModel = koinViewModel()
+) {
+    announcementDetailViewModel.updateUiState(id)
     val scrollState = rememberScrollState()
+    val uiState: AnnouncementDetailUiState by announcementDetailViewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -34,16 +42,23 @@ internal fun AnnouncementDetailScreen() {
             .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        // TODO: view model에서 받아온 값으로 대체
-        val fakeTitle = "6기 우아한테크코스에 오신 것을 환영합니다! 꼭 읽어주세요 !"
-        var fakeContent = ""
-        repeat(20) { fakeContent += "안녕하세요. 6기 여러분.\n여러분 모두 민트를 봐주세요.\n\n" }
+        when (val state = uiState) {
+            is AnnouncementDetailUiState.Success -> {
+                AnnouncementInfoHeader(
+                    "6기 - 공지사항",
+                    state.author,
+                    state.createdAt
+                )
+                AnnouncementContent(state.title, state.content)
+            }
 
-        AnnouncementInfoHeader("6기-공지사항", "하티", "2023.10.12 16:59")
-        AnnouncementContent(fakeTitle, fakeContent)
+            is AnnouncementDetailUiState.Loading -> {}
+            is AnnouncementDetailUiState.Failure -> {}
+        }
         Spacer(modifier = Modifier.padding(20.dp))
     }
 }
+
 
 @Composable
 fun AnnouncementInfoHeader(channel: String, author: String, createdAt: String) {
@@ -113,5 +128,5 @@ fun AnnouncementContent(title: String, content: String) {
 @Preview(showSystemUi = true)
 @Composable
 private fun AnnouncementDetailPreview() {
-    AnnouncementDetailScreen()
+    AnnouncementDetailScreen(id = 0)
 }

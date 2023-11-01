@@ -12,12 +12,16 @@ class CampusNavController(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    fun navigateToAnnouncementBoard() {
-        navController.navigate("AnnouncementBoard")
+    fun popBackStack() {
+        navController.popBackStack()
     }
 
-    fun navigateToAnnouncementDetail() {
-        navController.navigate("AnnouncementDetail")
+    fun navigateToAnnouncementBoard() {
+        navController.navigate("공지사항")
+    }
+
+    fun navigateToAnnouncementDetail(announcementId: Long) {
+        navController.navigate("상세보기/$announcementId")
     }
 
     @Composable

@@ -7,6 +7,7 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,9 +18,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navArgument
 import woowacourse.campus.R
 import woowacourse.campus.ui.announcement.board.AnnouncementBoardScreen
 import woowacourse.campus.ui.announcement.detail.AnnouncementDetailScreen
@@ -31,14 +34,25 @@ import woowacourse.campus.ui.myPage.MyPageScreen
 internal fun TopAppBarView(navController: CampusNavController) {
     val navBackStackEntry by navController.navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    CenterAlignedTopAppBar(title = {
-        currentRoute?.let {
-            Text(
-                text = it, // string을 어디서 주입할지
-                color = MaterialTheme.colorScheme.surfaceVariant,
-            )
-        }
-    })
+    CenterAlignedTopAppBar(
+        title = {
+            currentRoute?.let {
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                )
+            }
+        },
+        navigationIcon = {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_arrow_previous),
+                    contentDescription = "Back",
+                    tint = MaterialTheme.colorScheme.surfaceVariant,
+                )
+            }
+        },
+    )
 }
 
 @Composable
@@ -91,18 +105,27 @@ internal fun NavigationGraph(navController: CampusNavController) {
     ) {
         composable(BottomNavItem.Home.screenRoute) {
             HomeScreen(
-                onClickAnnouncementBoard = { navController.navigateToAnnouncementBoard() },
-                onClickAnnouncementItem = { navController.navigateToAnnouncementDetail() },
+                onAnnouncementBoardClick = { navController.navigateToAnnouncementBoard() },
+                onAnnouncementItemClick = { announcementId ->
+                    navController.navigateToAnnouncementDetail(announcementId)
+                },
             )
         }
         composable(BottomNavItem.MyPage.screenRoute) {
             MyPageScreen()
         }
-        composable("AnnouncementBoard") {
-            AnnouncementBoardScreen()
+        composable("공지사항") { // TODO: string resource
+            AnnouncementBoardScreen { announcementId ->
+                navController.navigateToAnnouncementDetail(announcementId)
+            }
         }
-        composable("AnnouncementDetail") {
-            AnnouncementDetailScreen()
+        composable(route = "상세보기/{announcementId}", arguments = listOf(
+            navArgument("announcementId") {
+                type = NavType.LongType
+            }
+        )) {
+            val arg = it.arguments?.getLong("/{announcementId}") ?: 0
+            AnnouncementDetailScreen(id = arg)
         }
     }
 }
