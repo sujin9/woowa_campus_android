@@ -32,12 +32,17 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.koin.androidx.compose.koinViewModel
 import woowacourse.campus.R
+import woowacourse.campus.ui.LoginViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun LoginScreenView() {
+internal fun LoginScreen(
+    loginViewModel: LoginViewModel = koinViewModel(),
+    navigateToHome: () -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -96,7 +101,10 @@ internal fun LoginScreenView() {
         )
         Spacer(modifier = Modifier.padding(24.dp))
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                loginViewModel.updateToken(password)
+                navigateToHome()
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
@@ -119,5 +127,5 @@ internal fun LoginScreenView() {
 @Preview(showSystemUi = true)
 @Composable
 private fun AnnouncementBoardScreenPreview() {
-    LoginScreenView()
+    LoginScreen {}
 }

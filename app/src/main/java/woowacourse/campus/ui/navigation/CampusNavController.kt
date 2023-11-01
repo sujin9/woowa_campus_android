@@ -24,6 +24,10 @@ class CampusNavController(
         navController.navigate("상세보기/$announcementId")
     }
 
+    fun navigateToHome() {
+        navController.navigate(BottomNavItem.Home.screenRoute)
+    }
+
     @Composable
     fun isBottomBarVisible() = when (currentDestination?.route) {
         BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute -> true
@@ -32,7 +36,8 @@ class CampusNavController(
 
     @Composable
     fun isTopAppBarVisible() = when (currentDestination?.route) {
-        BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute -> false
+        BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute,"로그인" -> false
+
         else -> true
     }
 }
