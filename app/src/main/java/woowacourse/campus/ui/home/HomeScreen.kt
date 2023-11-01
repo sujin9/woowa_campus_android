@@ -33,8 +33,8 @@ import woowacourse.campus.R
 @Composable
 internal fun HomeScreen(
     homeViewModel: HomeViewModel = koinViewModel(),
-    onClickAnnouncementBoard: () -> Unit,
-    onClickAnnouncementItem: () -> Unit,
+    onAnnouncementBoardClick: () -> Unit,
+    onAnnouncementItemClick: (announcementId: Long) -> Unit,
 ) {
     val uiState: HomeUiState by homeViewModel.uiState.collectAsStateWithLifecycle()
     val scrollState = rememberScrollState()
@@ -52,7 +52,7 @@ internal fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.padding(12.dp))
-            AnnouncementList(uiState, onClickAnnouncementBoard, onClickAnnouncementItem)
+            AnnouncementList(uiState, onAnnouncementBoardClick, onAnnouncementItemClick)
             Spacer(modifier = Modifier.padding(18.dp))
             ShortcutList()
             Spacer(modifier = Modifier.padding(32.dp))
@@ -78,8 +78,8 @@ fun AttendanceStatusBoard() {
 @Composable
 private fun AnnouncementList(
     homeUiState: HomeUiState,
-    onClick: () -> Unit,
-    onItemClick: () -> Unit
+    onAnnouncementBoardClick: () -> Unit,
+    onAnnouncementItemClick: (announcementId: Long) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -89,7 +89,7 @@ private fun AnnouncementList(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onClick() },
+                .clickable { onAnnouncementBoardClick() },
             verticalAlignment = Alignment.CenterVertically,
         ) {
             HomeContentTitle(stringResource(R.string.home_announcement))
@@ -114,7 +114,7 @@ private fun AnnouncementList(
                         AnnouncementListItem(
                             title = it.title,
                             content = it.createdAt.toString(),
-                            onClick = onItemClick
+                            onClick = { onAnnouncementItemClick(it.id) }
                         )
                     }
                 }
@@ -209,5 +209,5 @@ private fun HomeContentTitle(title: String) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun HomeScreenPreview() {
-    HomeScreen(onClickAnnouncementBoard = {}, onClickAnnouncementItem = {})
+    HomeScreen(onAnnouncementItemClick = {}, onAnnouncementBoardClick = {})
 }

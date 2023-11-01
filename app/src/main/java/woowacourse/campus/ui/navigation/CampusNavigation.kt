@@ -18,9 +18,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navArgument
 import woowacourse.campus.R
 import woowacourse.campus.ui.announcement.board.AnnouncementBoardScreen
 import woowacourse.campus.ui.announcement.detail.AnnouncementDetailScreen
@@ -103,17 +105,26 @@ internal fun NavigationGraph(navController: CampusNavController) {
     ) {
         composable(BottomNavItem.Home.screenRoute) {
             HomeScreen(
-                onClickAnnouncementBoard = { navController.navigateToAnnouncementBoard() },
-                onClickAnnouncementItem = { navController.navigateToAnnouncementDetail() },
+                onAnnouncementBoardClick = { navController.navigateToAnnouncementBoard() },
+                onAnnouncementItemClick = { announcementId ->
+                    navController.navigateToAnnouncementDetail(announcementId)
+                },
             )
         }
         composable(BottomNavItem.MyPage.screenRoute) {
             MyPageScreen()
         }
         composable("공지사항") { // TODO: string resource
-            AnnouncementBoardScreen { navController.navigateToAnnouncementDetail() }
+            AnnouncementBoardScreen { announcementId ->
+                navController.navigateToAnnouncementDetail(announcementId)
+            }
         }
-        composable("상세보기") {
+        composable(route = "상세보기/{announcementId}", arguments = listOf(
+            navArgument("announcementId") {
+                type = NavType.LongType
+            }
+        )) {
+            it.arguments?.getLong("/{announcementId}")
             AnnouncementDetailScreen()
         }
     }

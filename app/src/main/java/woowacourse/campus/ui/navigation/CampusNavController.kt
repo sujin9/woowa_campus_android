@@ -20,8 +20,8 @@ class CampusNavController(
         navController.navigate("공지사항")
     }
 
-    fun navigateToAnnouncementDetail() {
-        navController.navigate("상세보기")
+    fun navigateToAnnouncementDetail(announcementId: Long) {
+        navController.navigate("상세보기/$announcementId")
     }
 
     @Composable

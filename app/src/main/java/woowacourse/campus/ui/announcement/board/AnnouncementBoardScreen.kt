@@ -28,7 +28,7 @@ import woowacourse.campus.ui.common.VerticalDivider
 @Composable
 internal fun AnnouncementBoardScreen(
     announcementBoardViewModel: AnnouncementBoardViewModel = koinViewModel(),
-    onAnnouncementItemClick: () -> Unit,
+    onAnnouncementItemClick: (announcementId: Long) -> Unit,
 ) {
     val uiState: AnnouncementBoardUiState by announcementBoardViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -43,7 +43,7 @@ internal fun AnnouncementBoardScreen(
 @Composable
 private fun AnnouncementList(
     uiState: AnnouncementBoardUiState,
-    onAnnouncementItemClick: () -> Unit
+    onAnnouncementItemClick: (announcementId: Long) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -59,7 +59,7 @@ private fun AnnouncementList(
                             channel = "6기 - 안드로이드",
                             author = it.author,
                             date = it.createdAt,
-                            onAnnouncementItemClick = onAnnouncementItemClick,
+                            onAnnouncementItemClick = { onAnnouncementItemClick(it.id) },
                         )
                     }
                 }
