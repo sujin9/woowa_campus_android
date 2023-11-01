@@ -108,17 +108,6 @@ private fun AnnouncementList(
                     shape = RoundedCornerShape(10.dp),
                 ),
         ) {
-//            repeat(3) { // view model 에서 받아온 데이터로 변경
-//                if (it != 0) {
-//                    Divider(
-//                        thickness = 1.dp,
-//                        color = MaterialTheme.colorScheme.outlineVariant,
-//                        modifier = Modifier
-//                            .padding(horizontal = 12.dp)
-//                    )
-//                }
-//                AnnouncementListItem("공지 $it 입니다", "내용 $it 입니다", onItemClick)
-//            }
             when (homeUiState) {
                 is HomeUiState.Success -> {
                     homeUiState.latestAnnouncements.forEach {
