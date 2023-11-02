@@ -17,11 +17,11 @@ class CampusNavController(
     }
 
     fun navigateToAnnouncementBoard() {
-        navController.navigate("공지사항")
+        navController.navigate("announcementBoard")
     }
 
     fun navigateToAnnouncementDetail(announcementId: Long) {
-        navController.navigate("상세보기/$announcementId")
+        navController.navigate("announcementDetail/$announcementId")
     }
 
     @Composable
