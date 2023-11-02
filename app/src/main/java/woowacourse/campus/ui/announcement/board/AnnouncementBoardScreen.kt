@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -43,24 +44,31 @@ internal fun AnnouncementBoardScreen(
 @Composable
 private fun AnnouncementList(
     uiState: AnnouncementBoardUiState,
-    onAnnouncementItemClick: (announcementId: Long) -> Unit
+    onAnnouncementItemClick: (announcementId: Long) -> Unit,
 ) {
+    val listState = rememberLazyListState()
+
     LazyColumn(
+        state = listState,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 6.dp),
     ) {
         when (uiState) {
             is AnnouncementBoardUiState.Success -> {
-                uiState.announcements.forEach {
+                uiState.announcements.forEachIndexed { index, announcementPage ->
                     item {
                         AnnouncementListItem(
-                            title = it.title,
+                            title = announcementPage.title,
                             channel = "6기 - 안드로이드",
-                            author = it.author,
-                            date = it.createdAt,
-                            onAnnouncementItemClick = { onAnnouncementItemClick(it.id) },
+                            author = announcementPage.author,
+                            date = announcementPage.createdAt,
+                            onAnnouncementItemClick = { onAnnouncementItemClick(announcementPage.id) },
                         )
+                    }
+
+                    if (index == uiState.announcements.size - 1) {
+//                        loadMoreItems()
                     }
                 }
             }
