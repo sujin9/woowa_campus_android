@@ -11,14 +11,14 @@ import woowacourse.campus.domain.model.AnnouncementPage
 import woowacourse.campus.domain.usecase.GetAllAnnouncementsUseCase
 
 class AnnouncementBoardViewModel(
-    private val getAllAnnouncementsUseCase: GetAllAnnouncementsUseCase
+    private val getAllAnnouncementsUseCase: GetAllAnnouncementsUseCase,
 ) : ViewModel() {
 
     val uiState: StateFlow<AnnouncementBoardUiState> = flow {
         emit(getAllAnnouncementsUseCase())
     }.map {
         AnnouncementBoardUiState.Success(
-            announcements = it
+            announcements = it,
         )
     }.stateIn(
         scope = viewModelScope,
@@ -29,7 +29,7 @@ class AnnouncementBoardViewModel(
 
 sealed interface AnnouncementBoardUiState {
     data class Success(
-        val announcements: List<AnnouncementPage>
+        val announcements: List<AnnouncementPage>,
     ) : AnnouncementBoardUiState
 
     data object Loading : AnnouncementBoardUiState

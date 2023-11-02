@@ -1,6 +1,5 @@
 package woowacourse.campus.data.repository
 
-import android.util.Log
 import api.GetAllAnnouncementApi
 import api.GetAnnouncementApi
 import model.AnnouncementPageResponse
@@ -27,16 +26,15 @@ class AnnouncementRepository(
     companion object {
 
         fun getAnnouncement(
-            id: Long = 0,
-            authorization: String = ""
-        ) = announcementDetailFixture
+            id: Long,
+            authorization: String = "",
+        ) = announcementDetailFixture(id.toInt())
 
         fun getFixture(
             page: Int,
             size: Int = 10,
-            authorization: String = "password"
+            authorization: String = "password",
         ): AnnouncementsByPageResponse {
-
             return pageFixture.firstOrNull {
                 it.page == page
             } ?: AnnouncementsByPageResponse(
@@ -44,45 +42,34 @@ class AnnouncementRepository(
                 page = 0,
                 propertySize = 0,
                 totalElements = 0,
-                totalPages = 0
+                totalPages = 0,
             )
         }
 
-        private val announcementDetailFixture: AnnouncementResponse = AnnouncementResponse(
-            id = 0,
-            title = "6기 공지사항입니다.",
+        private fun announcementDetailFixture(id: Int): AnnouncementResponse = AnnouncementResponse(
+            id = id,
+            title = "6기 공지사항입니다. $id",
             content = "테스트입니다",
             author = "하티",
-            createdAt = "11.22 15:33:21"
-
+            createdAt = "11.22 15:33:21",
         )
 
-        private val announcementFixture: AnnouncementPageResponse = AnnouncementPageResponse(
-            id = 0, title = "6기 공지사항", author = "하티", createdAt = "11.22 15:33:21"
-        )
-
-        private val pageFixture: List<AnnouncementsByPageResponse> = listOf(
-            AnnouncementsByPageResponse(
-                announcements = List(10) { announcementFixture },
-                page = 0,
-                propertySize = 0,
-                totalElements = 0,
-                totalPages = 0
-            ),
-            AnnouncementsByPageResponse(
-                announcements = List(10) { announcementFixture },
-                page = 1,
-                propertySize = 0,
-                totalElements = 0,
-                totalPages = 0
-            ),
-            AnnouncementsByPageResponse(
-                announcements = List(10) { announcementFixture },
-                page = 2,
-                propertySize = 0,
-                totalElements = 0,
-                totalPages = 0
+        private fun announcementFixture(id: Int): AnnouncementPageResponse =
+            AnnouncementPageResponse(
+                id = id,
+                title = "6기 공지사항 $id",
+                author = "하티",
+                createdAt = "11.22 15:33:21",
             )
-        )
+
+        private val pageFixture: List<AnnouncementsByPageResponse> = List(100) { page ->
+            AnnouncementsByPageResponse(
+                announcements = List(10) { announcementFixture(page * 10 + it) },
+                page = page,
+                propertySize = 0,
+                totalElements = 0,
+                totalPages = 0,
+            )
+        }
     }
 }
