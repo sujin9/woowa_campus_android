@@ -27,6 +27,7 @@ import woowacourse.campus.R
 import woowacourse.campus.ui.announcement.board.AnnouncementBoardScreen
 import woowacourse.campus.ui.announcement.detail.AnnouncementDetailScreen
 import woowacourse.campus.ui.home.HomeScreen
+import woowacourse.campus.ui.login.LoginScreen
 import woowacourse.campus.ui.myPage.MyPageScreen
 
 @Composable
@@ -101,8 +102,13 @@ internal fun BottomNavigationView(navController: CampusNavController) {
 internal fun NavigationGraph(navController: CampusNavController) {
     NavHost(
         navController = navController.navController,
-        startDestination = BottomNavItem.Home.screenRoute,
+        startDestination = "로그인",
     ) {
+        composable("로그인") {
+            LoginScreen {
+                navController.navigateToHome()
+            }
+        }
         composable(BottomNavItem.Home.screenRoute) {
             HomeScreen(
                 onAnnouncementBoardClick = { navController.navigateToAnnouncementBoard() },
