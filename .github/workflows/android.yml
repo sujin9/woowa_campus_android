@@ -1,0 +1,56 @@
+name: Android CI
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  checks: write
+  pull-requests: write
+
+jobs:
+  android-test:
+
+    runs-on: ubuntu-latest
+    env:
+      working-directory: woowa_campus_android
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: gradle 캐싱
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Java JDK 17 세팅
+        if: steps.cache-jdk.outputs.cache-hit != 'true'
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+        working-directory: ${{ env.working-directory }}
+
+      - name: ktlint 진행
+        run: ./gradlew ktlintCheck
+
+      - name: test 진행
+        run: ./gradlew test
+        working-directory: ${{ env.working-directory }}
+
+      - name: test 결과
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          junit_files: |
+            ${{ env.working-directory }}/app/build/test-results/*Debug*/*.xml
+            ${{ env.working-directory }}/domain/build/test-results/test/*.xml
