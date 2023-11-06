@@ -8,6 +8,6 @@ import androidx.compose.ui.graphics.Color
 internal fun MyPageScreen() {
     Text(
         text = "ㅎㅇ2",
-        color = Color.Black
+        color = Color.Black,
     )
 }
