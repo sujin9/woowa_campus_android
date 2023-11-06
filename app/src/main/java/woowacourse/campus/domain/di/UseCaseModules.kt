@@ -7,6 +7,6 @@ import woowacourse.campus.domain.usecase.GetLatestAnnouncementsUseCase
 
 val useCaseModules = module {
     single { GetLatestAnnouncementsUseCase(get()) }
-    single { GetAllAnnouncementsUseCase(get()) }
+    factory { GetAllAnnouncementsUseCase(get()) }
     single { GetAnnouncementByIdUseCase(get()) }
 }
