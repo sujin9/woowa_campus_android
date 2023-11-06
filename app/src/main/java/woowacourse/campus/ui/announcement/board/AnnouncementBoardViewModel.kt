@@ -1,12 +1,18 @@
 package woowacourse.campus.ui.announcement.board
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import woowacourse.campus.domain.model.AnnouncementPage
+import woowacourse.campus.data.remote.api.GetAllAnnouncementApi
+import woowacourse.campus.data.remote.api.GetAnnouncementApi
+import woowacourse.campus.data.repository.AnnouncementRepository
+import woowacourse.campus.domain.model.Announcement
 import woowacourse.campus.domain.usecase.GetAllAnnouncementsUseCase
 
 class AnnouncementBoardViewModel(
@@ -23,9 +29,7 @@ class AnnouncementBoardViewModel(
                 getAllAnnouncementsUseCase()
             }.onSuccess { announcementPages ->
                 when (uiState.value) {
-                    is AnnouncementBoardUiState.Loading -> {
-                        _uiState.value = AnnouncementBoardUiState.Success(announcementPages)
-                    }
+                    is AnnouncementBoardUiState.Loading -> {}
 
                     is AnnouncementBoardUiState.Success -> {
                         val success = uiState.value as AnnouncementBoardUiState.Success
@@ -37,11 +41,26 @@ class AnnouncementBoardViewModel(
             }
         }
     }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                AnnouncementBoardViewModel(
+                    getAllAnnouncementsUseCase = GetAllAnnouncementsUseCase(
+                        announcementRepository = AnnouncementRepository(
+                            GetAllAnnouncementApi(),
+                            GetAnnouncementApi(),
+                        ),
+                    ),
+                )
+            }
+        }
+    }
 }
 
 sealed interface AnnouncementBoardUiState {
     data class Success(
-        val announcements: List<AnnouncementPage>,
+        val announcements: List<Announcement>,
     ) : AnnouncementBoardUiState
 
     data object Loading : AnnouncementBoardUiState

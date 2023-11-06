@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "WoowaCampus"
 include(":app")
-include(":network")

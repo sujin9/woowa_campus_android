@@ -1,34 +1,32 @@
 package woowacourse.campus.data.mapper
 
-import model.AnnouncementPageResponse
-import model.AnnouncementResponse
-import model.AnnouncementsByPageResponse
+import woowacourse.campus.data.model.AnnouncementDetailEntity
 import woowacourse.campus.data.model.AnnouncementEntity
-import woowacourse.campus.data.model.AnnouncementPageEntity
-import woowacourse.campus.data.model.AnnouncementsByPageEntity
+import woowacourse.campus.data.model.AnnouncementsEntity
+import woowacourse.campus.data.remote.response.AnnouncementDetailResponse
+import woowacourse.campus.data.remote.response.AnnouncementResponse
+import woowacourse.campus.data.remote.response.AnnouncementsResponse
 
 object AnnouncementDataMapper {
 
-    fun AnnouncementsByPageResponse.toEntity() = AnnouncementsByPageEntity(
+    fun AnnouncementsResponse.toEntity() = AnnouncementsEntity(
         announcements = announcements.map { it.toEntity() },
-        page = page,
-        propertySize = propertySize,
-        totalElements = totalElements,
-        totalPages = totalPages,
+        hasNext = hasNext,
+        lastCursorId = lastCursorId,
     )
 
-    fun AnnouncementPageResponse.toEntity() = AnnouncementPageEntity(
+    fun AnnouncementResponse.toEntity() = AnnouncementEntity(
         id = id.toLong(),
         title = title,
         author = author,
         createdAt = createdAt,
+        content = content,
     )
 
-    fun AnnouncementResponse.toEntity() = AnnouncementEntity(
-        id = id,
+    fun AnnouncementDetailResponse.toEntity() = AnnouncementDetailEntity(
         title = title,
-        content = content,
         author = author,
         createdAt = createdAt,
+        content = content,
     )
 }

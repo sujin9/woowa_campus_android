@@ -27,13 +27,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
-import org.koin.androidx.compose.koinViewModel
 import woowacourse.campus.ui.common.VerticalDivider
 
 @Composable
 internal fun AnnouncementBoardScreen(
-    announcementBoardViewModel: AnnouncementBoardViewModel = koinViewModel(),
+    announcementBoardViewModel: AnnouncementBoardViewModel = viewModel(factory = AnnouncementBoardViewModel.Factory),
     onAnnouncementItemClick: (announcementId: Long) -> Unit,
 ) {
     val uiState: AnnouncementBoardUiState by announcementBoardViewModel.uiState.collectAsStateWithLifecycle()
@@ -69,17 +69,18 @@ private fun AnnouncementList(
                     .padding(horizontal = 20.dp, vertical = 6.dp),
             ) {
                 items(uiState.announcements.size) {
-                    val announcementPage = uiState.announcements[it]
+                    val announcement = uiState.announcements[it]
                     AnnouncementListItem(
-                        title = announcementPage.title,
+                        title = announcement.title,
                         channel = "6기 - 안드로이드",
-                        author = announcementPage.author,
-                        date = announcementPage.createdAt,
-                        onAnnouncementItemClick = { onAnnouncementItemClick(announcementPage.id) },
+                        author = announcement.author,
+                        date = announcement.createdAt,
+                        onAnnouncementItemClick = { onAnnouncementItemClick(announcement.id) },
                     )
                 }
             }
         }
+
         is AnnouncementBoardUiState.Loading -> {}
     }
 }

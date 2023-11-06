@@ -1,14 +1,13 @@
 package woowacourse.campus.domain.usecase
 
-import woowacourse.campus.data.mapper.AnnouncementDomainMapper.toDomain
 import woowacourse.campus.data.repository.AnnouncementRepository
-import woowacourse.campus.domain.model.Announcement
+import woowacourse.campus.domain.mapper.AnnouncementDomainMapper.toDomain
+import woowacourse.campus.domain.model.AnnouncementDetail
 
 class GetAnnouncementByIdUseCase(
-    private val announcementRepository: AnnouncementRepository
+    private val announcementRepository: AnnouncementRepository,
 ) {
-
-    operator fun invoke(announcementId: Long): Announcement {
+    suspend operator fun invoke(announcementId: Long): AnnouncementDetail {
         return announcementRepository.getAnnouncementById(announcementId).toDomain()
     }
 }

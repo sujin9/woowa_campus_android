@@ -1,8 +1,8 @@
 package woowacourse.campus.domain.model
 
-data class AnnouncementPage(
-    val id: Long,
-    val title: String,
+data class AnnouncementDetail(
     val author: String,
+    val content: String,
     val createdAt: String,
+    val title: String,
 )
