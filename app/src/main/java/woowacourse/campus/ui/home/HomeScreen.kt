@@ -27,12 +27,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.koin.androidx.compose.koinViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import woowacourse.campus.R
 
 @Composable
 internal fun HomeScreen(
-    homeViewModel: HomeViewModel = koinViewModel(),
+    homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
     onAnnouncementBoardClick: () -> Unit,
     onAnnouncementItemClick: (announcementId: Long) -> Unit,
 ) {
@@ -69,9 +69,8 @@ fun AttendanceStatusBoard() {
             .background(
                 color = Color.DarkGray,
                 shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp),
-            )
+            ),
     ) {
-
     }
 }
 
@@ -113,8 +112,8 @@ private fun AnnouncementList(
                     homeUiState.latestAnnouncements.forEach {
                         AnnouncementListItem(
                             title = it.title,
-                            content = it.createdAt.toString(),
-                            onClick = { onAnnouncementItemClick(it.id) }
+                            content = it.createdAt,
+                            onClick = { onAnnouncementItemClick(it.id) },
                         )
                     }
                 }
@@ -181,17 +180,17 @@ private fun ShortcutListItem(title: String) {
                 color = MaterialTheme.colorScheme.surfaceVariant,
                 shape = RoundedCornerShape(10.dp),
             )
-            .size(104.dp, 112.dp)
+            .size(104.dp, 112.dp),
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_home),
-            contentDescription = "$title ${stringResource(id = R.string.home_shortcuts_description)}"
+            contentDescription = "$title ${stringResource(id = R.string.home_shortcuts_description)}",
         )
         Text(
             text = title,
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(top = 8.dp, bottom = 28.dp)
+            modifier = Modifier.padding(top = 8.dp, bottom = 28.dp),
         )
     }
 }
@@ -204,7 +203,6 @@ private fun HomeContentTitle(title: String) {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
 }
-
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

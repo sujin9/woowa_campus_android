@@ -24,13 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.koin.androidx.compose.koinViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import woowacourse.campus.ui.common.VerticalDivider
 
 @Composable
 internal fun AnnouncementDetailScreen(
     id: Long,
-    announcementDetailViewModel: AnnouncementDetailViewModel = koinViewModel()
+    announcementDetailViewModel: AnnouncementDetailViewModel = viewModel(factory = AnnouncementDetailViewModel.Factory),
 ) {
     announcementDetailViewModel.updateUiState(id)
     val scrollState = rememberScrollState()
@@ -46,10 +46,10 @@ internal fun AnnouncementDetailScreen(
             is AnnouncementDetailUiState.Success -> {
                 AnnouncementInfoHeader(
                     "6기 - 공지사항",
-                    state.author,
-                    state.createdAt
+                    state.announcement.author,
+                    state.announcement.createdAt,
                 )
-                AnnouncementContent(state.title, state.content)
+                AnnouncementContent(state.announcement.title, state.announcement.content)
             }
 
             is AnnouncementDetailUiState.Loading -> {}
@@ -58,7 +58,6 @@ internal fun AnnouncementDetailScreen(
         Spacer(modifier = Modifier.padding(20.dp))
     }
 }
-
 
 @Composable
 fun AnnouncementInfoHeader(channel: String, author: String, createdAt: String) {

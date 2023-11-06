@@ -1,9 +1,9 @@
 package woowacourse.campus.data.model
 
 data class AnnouncementEntity(
-    val id: Int,
-    val title: String,
-    val content: String,
+    val id: Long,
     val author: String,
-    val createdAt: String
+    val content: String,
+    val createdAt: String,
+    val title: String,
 )

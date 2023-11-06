@@ -1,17 +1,17 @@
-package woowacourse.campus.data.mapper
+package woowacourse.campus.domain.mapper
 
+import woowacourse.campus.data.model.AnnouncementDetailEntity
 import woowacourse.campus.data.model.AnnouncementEntity
-import woowacourse.campus.data.model.AnnouncementPageEntity
 import woowacourse.campus.domain.model.Announcement
-import woowacourse.campus.domain.model.AnnouncementPage
+import woowacourse.campus.domain.model.AnnouncementDetail
 
 object AnnouncementDomainMapper {
 
-    fun AnnouncementPageEntity.toDomain() = AnnouncementPage(
-        id = id,
+    fun AnnouncementDetailEntity.toDomain() = AnnouncementDetail(
         title = title,
         author = author,
         createdAt = createdAt,
+        content = content,
     )
 
     fun AnnouncementEntity.toDomain() = Announcement(
@@ -19,6 +19,6 @@ object AnnouncementDomainMapper {
         title = title,
         content = content,
         author = author,
-        createdAt = createdAt
+        createdAt = createdAt,
     )
 }
