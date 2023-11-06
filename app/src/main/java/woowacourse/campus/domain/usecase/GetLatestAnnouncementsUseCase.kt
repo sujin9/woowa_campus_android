@@ -8,7 +8,7 @@ class GetLatestAnnouncementsUseCase(
     private val announcementRepository: AnnouncementRepository,
 ) {
     operator fun invoke(): List<AnnouncementPage> {
-        announcementRepository.getAnnouncements(0).let { announcements ->
+        announcementRepository.getAnnouncements(0, 3).let { announcements ->
             return announcements.announcements
                 .take(3)
                 .map {

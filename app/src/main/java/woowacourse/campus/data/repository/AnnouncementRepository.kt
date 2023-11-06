@@ -13,9 +13,8 @@ class AnnouncementRepository(
     private val getAllAnnouncementApi: GetAllAnnouncementApi,
     private val getAnnouncementApi: GetAnnouncementApi,
 ) {
-
-    fun getAnnouncements(page: Int): AnnouncementsByPageEntity {
-        return getFixture(page, 10, "password")
+    fun getAnnouncements(cursor: Long, size: Int): AnnouncementsByPageEntity {
+        return getFixture(cursor, size, "password")
             .toEntity()
     }
 
@@ -31,12 +30,12 @@ class AnnouncementRepository(
         ) = announcementDetailFixture(id.toInt())
 
         fun getFixture(
-            page: Int,
-            size: Int = 10,
+            cursor: Long,
+            size: Int,
             authorization: String = "password",
         ): AnnouncementsByPageResponse {
             return pageFixture.firstOrNull {
-                it.page == page
+                it.page == cursor.toInt()
             } ?: AnnouncementsByPageResponse(
                 announcements = listOf(),
                 page = 0,
@@ -62,10 +61,10 @@ class AnnouncementRepository(
                 createdAt = "11.22 15:33:21",
             )
 
-        private val pageFixture: List<AnnouncementsByPageResponse> = List(100) { page ->
+        private val pageFixture: List<AnnouncementsByPageResponse> = List(100) { cursor ->
             AnnouncementsByPageResponse(
-                announcements = List(10) { announcementFixture(page * 10 + it) },
-                page = page,
+                announcements = List(10) { announcementFixture(cursor + it) },
+                page = cursor,
                 propertySize = 0,
                 totalElements = 0,
                 totalPages = 0,
