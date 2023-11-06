@@ -7,13 +7,16 @@ import woowacourse.campus.domain.model.Announcement
 class GetAllAnnouncementsUseCase(
     private val announcementRepository: AnnouncementRepository,
 ) {
-    private var lastItemId = 0L
+    private var lastItemId: Long? = null
+    private var hasNext: Boolean = true
     private val size: Int
-        get() = if (lastItemId == 0L) 20 else 10
+        get() = if (lastItemId == null) 20 else 10
 
     suspend operator fun invoke(): List<Announcement> {
         val result = announcementRepository.getAnnouncements(lastItemId = lastItemId, size = size)
         lastItemId = result.announcements.last().id
+        hasNext = result.hasNext
+
         return result.announcements.map { it.toDomain() }
     }
 }

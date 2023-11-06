@@ -29,16 +29,18 @@ class AnnouncementBoardViewModel(
                 getAllAnnouncementsUseCase()
             }.onSuccess { announcementPages ->
                 when (uiState.value) {
-                    is AnnouncementBoardUiState.Loading -> {}
+                    is AnnouncementBoardUiState.Loading -> {
+                        val success = AnnouncementBoardUiState.Success(announcementPages)
+                        _uiState.value = success
+                    }
 
                     is AnnouncementBoardUiState.Success -> {
                         val success = uiState.value as AnnouncementBoardUiState.Success
-
                         _uiState.value =
                             success.copy(announcements = success.announcements + announcementPages)
                     }
                 }
-            }
+            }.onFailure {}
         }
     }
 
