@@ -157,12 +157,17 @@ private fun ShortcutList() {
             .fillMaxWidth()
             .padding(start = 20.dp),
     ) {
+        val shortcutItems = listOf(
+            stringResource(R.string.home_shortcut_zzimkkong),
+            stringResource(R.string.home_shortcut_prolog),
+            stringResource(R.string.home_shortcut_lms),
+        )
+
         HomeContentTitle(stringResource(R.string.home_shortcuts))
         Spacer(modifier = Modifier.padding(8.dp))
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            val shortcutItems = listOf("찜꽁", "프롤로그", "LMS")
             items(shortcutItems.size) {
                 ShortcutListItem(title = shortcutItems[it])
             }

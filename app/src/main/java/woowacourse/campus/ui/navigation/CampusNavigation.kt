@@ -55,7 +55,7 @@ internal fun TopAppBarView(navController: CampusNavController) {
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_arrow_previous),
-                    contentDescription = "Back",
+                    contentDescription = stringResource(R.string.top_bar_back_image_description),
                     tint = MaterialTheme.colorScheme.surfaceVariant,
                 )
             }
