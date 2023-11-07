@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">WoowaCampus</string>
 
+    <!-- screen top bar title -->
+    <string name="top_bar_announcement_baord">공지사항</string>
+    <string name="top_bar_announcement_detail">상세보기</string>
+
     <!-- bottom_navigation -->
     <string name="bottom_navigation_home">홈</string>
     <string name="bottom_navigation_my_page">마이페이지</string>

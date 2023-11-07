@@ -35,11 +35,18 @@ import woowacourse.campus.ui.myPage.MyPageScreen
 internal fun TopAppBarView(navController: CampusNavController) {
     val navBackStackEntry by navController.navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+    val title = stringResource(
+        id = when {
+            currentRoute == "announcementBoard" -> R.string.top_bar_announcement_baord
+            currentRoute?.contains("announcementDetail") == true -> R.string.top_bar_announcement_detail
+            else -> R.string.app_name
+        },
+    )
     CenterAlignedTopAppBar(
         title = {
             currentRoute?.let {
                 Text(
-                    text = it,
+                    text = title,
                     color = MaterialTheme.colorScheme.surfaceVariant,
                 )
             }
@@ -120,16 +127,19 @@ internal fun NavigationGraph(navController: CampusNavController) {
         composable(BottomNavItem.MyPage.screenRoute) {
             MyPageScreen()
         }
-        composable("공지사항") { // TODO: string resource
+        composable("announcementBoard") { // TODO: route string으로 관리
             AnnouncementBoardScreen { announcementId ->
                 navController.navigateToAnnouncementDetail(announcementId)
             }
         }
-        composable(route = "상세보기/{announcementId}", arguments = listOf(
-            navArgument("announcementId") {
-                type = NavType.LongType
-            }
-        )) {
+        composable(
+            route = "announcementDetail/{announcementId}",
+            arguments = listOf(
+                navArgument("announcementId") {
+                    type = NavType.LongType
+                },
+            ),
+        ) {
             val arg = it.arguments?.getLong("/{announcementId}") ?: 0
             AnnouncementDetailScreen(id = arg)
         }

@@ -1,15 +1,22 @@
 package woowacourse.campus.ui.announcement.detail
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import woowacourse.campus.data.remote.api.GetAllAnnouncementApi
+import woowacourse.campus.data.remote.api.GetAnnouncementApi
+import woowacourse.campus.data.repository.AnnouncementRepository
+import woowacourse.campus.domain.model.AnnouncementDetail
 import woowacourse.campus.domain.usecase.GetAnnouncementByIdUseCase
 
 class AnnouncementDetailViewModel(
-    private val getAnnouncementByIdUseCase: GetAnnouncementByIdUseCase
+    private val getAnnouncementByIdUseCase: GetAnnouncementByIdUseCase,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<AnnouncementDetailUiState> =
@@ -22,14 +29,25 @@ class AnnouncementDetailViewModel(
                 getAnnouncementByIdUseCase(announcementId)
             }.onSuccess { announcement ->
                 _uiState.value = AnnouncementDetailUiState.Success(
-                    id = announcement.id,
-                    title = announcement.title,
-                    content = announcement.content,
-                    author = announcement.author,
-                    createdAt = announcement.createdAt,
+                    announcement = announcement,
                 )
             }.onFailure { message ->
                 _uiState.value = AnnouncementDetailUiState.Failure(message)
+            }
+        }
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                AnnouncementDetailViewModel(
+                    getAnnouncementByIdUseCase = GetAnnouncementByIdUseCase(
+                        announcementRepository = AnnouncementRepository(
+                            GetAllAnnouncementApi(),
+                            GetAnnouncementApi(),
+                        ),
+                    ),
+                )
             }
         }
     }
@@ -37,15 +55,11 @@ class AnnouncementDetailViewModel(
 
 sealed interface AnnouncementDetailUiState {
     data class Success(
-        val id: Int,
-        val title: String,
-        val content: String,
-        val author: String,
-        val createdAt: String
+        val announcement: AnnouncementDetail,
     ) : AnnouncementDetailUiState
 
     data object Loading : AnnouncementDetailUiState
     data class Failure(
-        val message: Throwable
+        val message: Throwable,
     ) : AnnouncementDetailUiState
 }

@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -26,7 +27,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -69,7 +70,6 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     // mockk
     testImplementation("io.mockk:mockk:1.12.0")
-    implementation(project(":network"))
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
@@ -95,16 +95,9 @@ dependencies {
     // reflection
     testImplementation("org.jetbrains.kotlin:kotlin-reflect:1.8.21")
     // ktor
-    implementation("io.ktor:ktor-client-core:2.1.3")
-    implementation("io.ktor:ktor-client-cio:2.1.3")
-    implementation("io.ktor:ktor-client-content-negotiation:2.1.3")
-    // gson
-    implementation("com.google.code.gson:gson:2.9.0")
-    implementation("io.ktor:ktor-client-gson:2.1.3")
-    implementation("io.ktor:ktor-serialization-gson:2.1.3")
-    // koin
-    implementation("io.insert-koin:koin-android:3.5.0")
-    implementation("io.insert-koin:koin-androidx-compose:3.5.0")
-    // EncryptedSharedPreferences
-    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha06")
+    implementation("io.ktor:ktor-client-core:2.3.5")
+    implementation("io.ktor:ktor-client-android:2.3.5")
+    implementation("io.ktor:ktor-client-logging-jvm:2.3.5")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.5")
+    implementation("io.ktor:ktor-client-content-negotiation-jvm:2.3.5")
 }
