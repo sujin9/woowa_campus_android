@@ -8,11 +8,15 @@ class GetLatestAnnouncementsUseCase(
     private val announcementRepository: AnnouncementRepository,
 ) {
     suspend operator fun invoke(): List<Announcement> {
-        announcementRepository.getAnnouncements(null, 3).let { announcements ->
+        announcementRepository.getAnnouncements(null, HOME_ANNOUNCEMENTS_SIZE).let { announcements ->
             return announcements.announcements
                 .map {
                     it.toDomain()
                 }
         }
+    }
+
+    companion object {
+        private const val HOME_ANNOUNCEMENTS_SIZE = 3
     }
 }
