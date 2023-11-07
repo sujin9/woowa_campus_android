@@ -9,11 +9,21 @@ class CampusNavController(
     val navController: NavHostController,
 ) {
     private val currentDestination: NavDestination?
-        @Composable get() = navController
-            .currentBackStackEntryAsState().value?.destination
+        @Composable get() = navController.currentBackStackEntryAsState().value?.destination
+    val currentRoute: String? @Composable get() = currentDestination?.route
 
     fun popBackStack() {
         navController.popBackStack()
+    }
+
+    fun navigate(route: String) {
+        navController.navigate(route) {
+            navController.graph.startDestinationRoute?.let {
+                popUpTo(it) { saveState = true }
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
     }
 
     fun navigateToAnnouncementBoard() {
@@ -29,13 +39,13 @@ class CampusNavController(
     }
 
     @Composable
-    fun isBottomBarVisible() = when (currentDestination?.route) {
+    fun isBottomBarVisible() = when (currentRoute) {
         BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute -> true
         else -> false
     }
 
     @Composable
-    fun isTopAppBarVisible() = when (currentDestination?.route) {
+    fun isTopAppBarVisible() = when (currentRoute) {
         BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute, "로그인" -> false
         else -> true
     }

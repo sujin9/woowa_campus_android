@@ -71,21 +71,11 @@ internal fun BottomNavigationView(navController: CampusNavController) {
         backgroundColor = Color.White,
         contentColor = Color.Green,
     ) {
-        val navBackStackEntry by navController.navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-
         items.forEach { item ->
             BottomNavigationItem(
-                selected = currentRoute == item.screenRoute,
+                selected = navController.currentRoute == item.screenRoute,
                 onClick = {
-                    // TODO: navController 로 옮기기
-                    navController.navController.navigate(item.screenRoute) {
-                        navController.navController.graph.startDestinationRoute?.let {
-                            popUpTo(it) { saveState = true }
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    navController.navigate(item.screenRoute)
                 },
                 icon = {
                     Icon(
