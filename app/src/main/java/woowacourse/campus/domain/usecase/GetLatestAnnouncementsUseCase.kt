@@ -10,7 +10,6 @@ class GetLatestAnnouncementsUseCase(
     suspend operator fun invoke(): List<Announcement> {
         announcementRepository.getAnnouncements(null, 3).let { announcements ->
             return announcements.announcements
-//                .take(3)
                 .map {
                     it.toDomain()
                 }
