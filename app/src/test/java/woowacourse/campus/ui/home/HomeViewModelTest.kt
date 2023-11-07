@@ -32,20 +32,22 @@ class HomeViewModelTest : BehaviorSpec({
             actual shouldHaveSize 3
         }
     }
-})
+}) {
+    companion object {
+        private val fakeAnnouncements = List(3) { index ->
+            AnnouncementEntity(
+                id = index.toLong(),
+                title = "하티 $index",
+                content = "산군 $index",
+                author = "레아",
+                createdAt = "2021-08-20T14:00:00",
+            )
+        }
 
-private val fakeAnnouncements = List(3) { index ->
-    AnnouncementEntity(
-        id = index.toLong(),
-        title = "하티 $index",
-        content = "산군 $index",
-        author = "레아",
-        createdAt = "2021-08-20T14:00:00",
-    )
+        private val fakeAnnouncementEntity = AnnouncementsEntity(
+            announcements = fakeAnnouncements,
+            hasNext = true,
+            lastCursorId = 2,
+        )
+    }
 }
-
-private val fakeAnnouncementEntity = AnnouncementsEntity(
-    announcements = fakeAnnouncements,
-    hasNext = true,
-    lastCursorId = 2,
-)
