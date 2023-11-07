@@ -9,6 +9,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.campus.ui.navigation.BottomNavItem
+import woowacourse.campus.ui.navigation.CampusNavController
 
 class MainScreenTest {
 
@@ -22,14 +23,14 @@ class MainScreenTest {
         composeTestRule.setContent {
             navController = TestNavHostController(LocalContext.current)
             navController.navigatorProvider.addNavigator(ComposeNavigator())
-            MainScreenView(navController)
+            MainScreenView(CampusNavController(navController))
         }
     }
 
     @Test
-    fun 앱을_실행하면_시작_화면은_홈이다() {
+    fun 앱을_실행하면_시작_화면은_로그인_화면이다() {
         val actual = navController.currentBackStackEntry?.destination?.route
-        val expected = BottomNavItem.Home.screenRoute
+        val expected = "로그인"
         assertThat(actual).isEqualTo(expected)
     }
 }
