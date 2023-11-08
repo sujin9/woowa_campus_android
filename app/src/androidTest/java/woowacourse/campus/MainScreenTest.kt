@@ -29,7 +29,7 @@ class MainScreenTest {
     @Test
     fun 앱을_실행하면_시작_화면은_로그인_화면이다() {
         val actual = navController.currentBackStackEntry?.destination?.route
-        val expected = "로그인"
+        val expected = "Login"
         assertThat(actual).isEqualTo(expected)
     }
 }

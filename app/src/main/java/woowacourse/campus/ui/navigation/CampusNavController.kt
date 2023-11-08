@@ -27,11 +27,11 @@ class CampusNavController(
     }
 
     fun navigateToAnnouncementBoard() {
-        navController.navigate("announcementBoard")
+        navController.navigate(ScreenRoute.ANNOUNCEMENT_BOARD.route)
     }
 
     fun navigateToAnnouncementDetail(announcementId: Long) {
-        navController.navigate("announcementDetail/$announcementId")
+        navController.navigate("${ScreenRoute.ANNOUNCEMENT_DETAIL.route}/$announcementId")
     }
 
     fun navigateToHome() {
@@ -46,7 +46,7 @@ class CampusNavController(
 
     @Composable
     fun isTopAppBarVisible() = when (currentRoute) {
-        BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute, "로그인" -> false
+        BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute, ScreenRoute.LOGIN.route -> false
         else -> true
     }
 }

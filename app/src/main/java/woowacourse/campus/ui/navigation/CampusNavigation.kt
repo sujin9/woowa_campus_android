@@ -15,9 +15,9 @@ import woowacourse.campus.ui.myPage.MyPageScreen
 internal fun NavigationGraph(navController: CampusNavController) {
     NavHost(
         navController = navController.navController,
-        startDestination = "로그인",
+        startDestination = ScreenRoute.LOGIN.route,
     ) {
-        composable("로그인") {
+        composable(ScreenRoute.LOGIN.route) {
             LoginScreen {
                 navController.navigateToHome()
             }
@@ -33,13 +33,13 @@ internal fun NavigationGraph(navController: CampusNavController) {
         composable(BottomNavItem.MyPage.screenRoute) {
             MyPageScreen()
         }
-        composable("announcementBoard") { // TODO: route string으로 관리
+        composable(ScreenRoute.ANNOUNCEMENT_BOARD.route) {
             AnnouncementBoardScreen { announcementId ->
                 navController.navigateToAnnouncementDetail(announcementId)
             }
         }
         composable(
-            route = "announcementDetail/{announcementId}",
+            route = "${ScreenRoute.ANNOUNCEMENT_DETAIL.route}/{announcementId}",
             arguments = listOf(
                 navArgument("announcementId") {
                     type = NavType.LongType
