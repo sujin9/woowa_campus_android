@@ -36,7 +36,7 @@ class CampusNavController(
 
     @Composable
     fun isTopAppBarVisible() = when (currentDestination?.route) {
-        BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute,"로그인" -> false
+        BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute, "로그인" -> false
         else -> true
     }
 }

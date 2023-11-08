@@ -11,7 +11,7 @@ import woowacourse.campus.WoowaApplication
 import woowacourse.campus.data.repository.AuthRepository
 
 class LoginViewModel(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
 
     val loginState: StateFlow<Boolean> =
@@ -21,7 +21,6 @@ class LoginViewModel(
         authRepository.putToken(TOKEN, password)
     }
 
-
     companion object {
         private const val TOKEN = "TOKEN"
 
@@ -29,8 +28,8 @@ class LoginViewModel(
             initializer {
                 LoginViewModel(
                     authRepository = AuthRepository(
-                        WoowaApplication.getApplicationContext()
-                    )
+                        WoowaApplication.getApplicationContext(),
+                    ),
                 )
             }
         }
