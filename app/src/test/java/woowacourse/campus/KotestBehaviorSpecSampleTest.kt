@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
-class ExampleUnitTest : BehaviorSpec({
+class KotestBehaviorSpecSampleTest : BehaviorSpec({
     Given("날씨가 더운 경우") {
         val samples = List(5) { it }
         When("에어컨을 끄면") {

@@ -2,6 +2,7 @@ package woowacourse.campus.ui.home
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -10,6 +11,7 @@ import kotlinx.coroutines.test.setMain
 import woowacourse.campus.data.model.AnnouncementEntity
 import woowacourse.campus.data.model.AnnouncementsEntity
 import woowacourse.campus.data.repository.AnnouncementRepository
+import woowacourse.campus.domain.mapper.AnnouncementDomainMapper.toDomain
 import woowacourse.campus.domain.usecase.GetLatestAnnouncementsUseCase
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -30,6 +32,7 @@ class HomeViewModelTest : BehaviorSpec({
             val state = viewModel.uiState.value as HomeUiState.Success
             val actual = state.latestAnnouncements
             actual shouldHaveSize 3
+            actual shouldBe fakeAnnouncements.map { it.toDomain() }
         }
     }
 }) {

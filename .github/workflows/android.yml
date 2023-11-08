@@ -12,8 +12,6 @@ jobs:
   android-test:
 
     runs-on: ubuntu-latest
-    env:
-      working-directory: woowa_campus_android
 
     steps:
       - uses: actions/checkout@v3
@@ -38,19 +36,39 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-        working-directory: ${{ env.working-directory }}
 
       - name: ktlint 진행
         run: ./gradlew ktlintCheck
 
       - name: test 진행
         run: ./gradlew test
-        working-directory: ${{ env.working-directory }}
 
       - name: test 결과
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
           junit_files: |
-            ${{ env.working-directory }}/app/build/test-results/*Debug*/*.xml
-            ${{ env.working-directory }}/domain/build/test-results/test/*.xml
+            ./app/build/test-results/*Debug*/*.xml
+            ./domain/build/test-results/test/*.xml
+
+  connected-tests:
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'adopt'
+          cache: 'gradle'
+        
+      - name: Run connected tests
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          target: google_apis
+          arch: x86_64
+          script: ./gradlew connectedCheck

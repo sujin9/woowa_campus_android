@@ -8,7 +8,6 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.campus.ui.navigation.BottomNavItem
 import woowacourse.campus.ui.navigation.CampusNavController
 
 class MainScreenTest {

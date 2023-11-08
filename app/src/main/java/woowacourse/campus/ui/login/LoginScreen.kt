@@ -35,12 +35,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import woowacourse.campus.R
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LoginScreen(
     loginViewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
-    navigateToHome: () -> Unit
+    navigateToHome: () -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -52,13 +51,13 @@ internal fun LoginScreen(
         Spacer(modifier = Modifier.padding(top = 160.dp))
         Image(
             painter = painterResource(
-                id = R.drawable.img_logo
+                id = R.drawable.img_logo,
             ),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
-            contentScale = ContentScale.FillWidth
+            contentScale = ContentScale.FillWidth,
         )
         Spacer(modifier = Modifier.padding(top = 32.dp))
         TextField(
@@ -75,27 +74,27 @@ internal fun LoginScreen(
             },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password
+                keyboardType = KeyboardType.Password,
             ),
             shape = RoundedCornerShape(10.dp),
             colors = TextFieldDefaults.textFieldColors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                textColor = Black
+                textColor = Black,
             ),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
                 .background(
                     color = MaterialTheme.colorScheme.background,
-                    shape = RoundedCornerShape(10.dp)
+                    shape = RoundedCornerShape(10.dp),
                 )
                 .border(
                     BorderStroke(
                         width = 1.dp,
-                        color = MaterialTheme.colorScheme.outline
+                        color = MaterialTheme.colorScheme.outline,
                     ),
-                    shape = RoundedCornerShape(10.dp)
+                    shape = RoundedCornerShape(10.dp),
                 ),
         )
         Spacer(modifier = Modifier.padding(24.dp))
@@ -109,19 +108,18 @@ internal fun LoginScreen(
                 .padding(horizontal = 20.dp),
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
+                containerColor = MaterialTheme.colorScheme.primary,
+            ),
         ) {
             Text(
                 text = "로그인하기",
                 modifier = Modifier.padding(vertical = 16.dp),
                 style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.surfaceVariant
+                color = MaterialTheme.colorScheme.surfaceVariant,
             )
         }
     }
 }
-
 
 @Preview(showSystemUi = true)
 @Composable

@@ -11,7 +11,7 @@ import woowacourse.campus.WoowaApplication
 import woowacourse.campus.data.repository.AuthRepository
 
 class LoginViewModel(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
 
     private val _loginState: MutableStateFlow<Boolean> =
@@ -30,8 +30,8 @@ class LoginViewModel(
             initializer {
                 LoginViewModel(
                     authRepository = AuthRepository(
-                        WoowaApplication.getApplicationContext()
-                    )
+                        WoowaApplication.getApplicationContext(),
+                    ),
                 )
             }
         }
