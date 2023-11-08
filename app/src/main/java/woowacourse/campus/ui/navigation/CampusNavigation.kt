@@ -1,7 +1,6 @@
 package woowacourse.campus.ui.navigation
 
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -13,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -68,8 +66,7 @@ internal fun BottomNavigationView(navController: CampusNavController) {
     val items = listOf(BottomNavItem.Home, BottomNavItem.MyPage)
 
     BottomNavigation(
-        backgroundColor = Color.White,
-        contentColor = Color.Green,
+        backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
     ) {
         items.forEach { item ->
             BottomNavigationItem(
@@ -81,14 +78,12 @@ internal fun BottomNavigationView(navController: CampusNavController) {
                     Icon(
                         painter = painterResource(id = item.icon),
                         contentDescription = stringResource(id = item.title),
-                        modifier = Modifier
-                            .width(20.dp)
-                            .height(20.dp),
+                        modifier = Modifier.size(20.dp),
                     )
                 },
                 label = { Text(stringResource(id = item.title), fontSize = 9.sp) },
                 selectedContentColor = MaterialTheme.colorScheme.primary,
-                unselectedContentColor = Color.Gray,
+                unselectedContentColor = MaterialTheme.colorScheme.onPrimary,
                 alwaysShowLabel = false,
             )
         }
