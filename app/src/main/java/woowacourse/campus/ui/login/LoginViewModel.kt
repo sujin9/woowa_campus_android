@@ -14,13 +14,14 @@ class LoginViewModel(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    val loginState: StateFlow<Boolean> =
-        MutableStateFlow(authRepository.getToken(TOKEN).isEmpty()).asStateFlow()
+    private val _loginState: MutableStateFlow<Boolean> =
+        MutableStateFlow(authRepository.getToken(TOKEN).isNotEmpty())
+    val loginState: StateFlow<Boolean> = _loginState.asStateFlow()
 
     fun updateToken(password: String) {
         authRepository.putToken(TOKEN, password)
+        _loginState.value = true
     }
-
 
     companion object {
         private const val TOKEN = "TOKEN"
