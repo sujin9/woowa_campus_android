@@ -33,13 +33,27 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import woowacourse.campus.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LoginScreen(
     loginViewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
+    navigateToHome: () -> Unit,
+) {
+    val loginState: Boolean by loginViewModel.loginState.collectAsStateWithLifecycle()
+    if (loginState) {
+        navigateToHome()
+    } else {
+        LoginScreenDrawing(loginViewModel, navigateToHome)
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun LoginScreenDrawing( // naming...
+    loginViewModel: LoginViewModel,
     navigateToHome: () -> Unit,
 ) {
     Column(

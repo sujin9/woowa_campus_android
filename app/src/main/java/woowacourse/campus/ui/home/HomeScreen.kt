@@ -112,7 +112,7 @@ private fun AnnouncementList(
                     homeUiState.latestAnnouncements.forEach {
                         AnnouncementListItem(
                             title = it.title,
-                            content = it.createdAt,
+                            content = it.content,
                             onClick = { onAnnouncementItemClick(it.id) },
                         )
                     }
