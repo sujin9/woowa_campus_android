@@ -9,19 +9,29 @@ class CampusNavController(
     val navController: NavHostController,
 ) {
     private val currentDestination: NavDestination?
-        @Composable get() = navController
-            .currentBackStackEntryAsState().value?.destination
+        @Composable get() = navController.currentBackStackEntryAsState().value?.destination
+    val currentRoute: String? @Composable get() = currentDestination?.route
 
     fun popBackStack() {
         navController.popBackStack()
     }
 
+    fun navigate(route: String) {
+        navController.navigate(route) {
+            navController.graph.startDestinationRoute?.let {
+                popUpTo(it) { saveState = true }
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
     fun navigateToAnnouncementBoard() {
-        navController.navigate("announcementBoard")
+        navController.navigate(ScreenRoute.ANNOUNCEMENT_BOARD.route)
     }
 
     fun navigateToAnnouncementDetail(announcementId: Long) {
-        navController.navigate("announcementDetail/$announcementId")
+        navController.navigate("${ScreenRoute.ANNOUNCEMENT_DETAIL.route}/$announcementId")
     }
 
     fun navigateToHome() {
@@ -29,14 +39,14 @@ class CampusNavController(
     }
 
     @Composable
-    fun isBottomBarVisible() = when (currentDestination?.route) {
+    fun isBottomBarVisible() = when (currentRoute) {
         BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute -> true
         else -> false
     }
 
     @Composable
-    fun isTopAppBarVisible() = when (currentDestination?.route) {
-        BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute, "로그인" -> false
+    fun isTopAppBarVisible() = when (currentRoute) {
+        BottomNavItem.Home.screenRoute, BottomNavItem.MyPage.screenRoute, ScreenRoute.LOGIN.route -> false
         else -> true
     }
 }

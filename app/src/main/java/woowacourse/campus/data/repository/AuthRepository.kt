@@ -26,10 +26,11 @@ class AuthRepository(context: Context) {
     }
 
     fun getToken(key: String): String {
-        return storage.getString(key, "") ?: ""
+        return storage.getString(key, DEFAULT_TOKEN) ?: DEFAULT_TOKEN
     }
 
     companion object {
         private const val FILE_NAME = "Campus"
+        private const val DEFAULT_TOKEN = ""
     }
 }

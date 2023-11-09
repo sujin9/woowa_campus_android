@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 import woowacourse.campus.data.remote.api.GetAllAnnouncementApi
 import woowacourse.campus.data.remote.api.GetAnnouncementApi
 import woowacourse.campus.data.repository.AnnouncementRepository
-import woowacourse.campus.domain.model.Announcement
 import woowacourse.campus.domain.usecase.GetAllAnnouncementsUseCase
 
 class AnnouncementBoardViewModel(
@@ -58,12 +57,4 @@ class AnnouncementBoardViewModel(
             }
         }
     }
-}
-
-sealed interface AnnouncementBoardUiState {
-    data class Success(
-        val announcements: List<Announcement>,
-    ) : AnnouncementBoardUiState
-
-    data object Loading : AnnouncementBoardUiState
 }

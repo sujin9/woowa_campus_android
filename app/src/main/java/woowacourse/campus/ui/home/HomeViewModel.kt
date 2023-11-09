@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import woowacourse.campus.data.remote.api.GetAllAnnouncementApi
 import woowacourse.campus.data.remote.api.GetAnnouncementApi
@@ -15,11 +16,12 @@ import woowacourse.campus.domain.usecase.GetLatestAnnouncementsUseCase
 class HomeViewModel(
     getLatestAnnouncementsUseCase: GetLatestAnnouncementsUseCase,
 ) : ViewModel() {
-    val uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
+    private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
+    val uiState: StateFlow<HomeUiState> get() = _uiState
 
     init {
         viewModelScope.launch {
-            uiState.value = HomeUiState.Success(
+            _uiState.value = HomeUiState.Success(
                 latestAnnouncements = getLatestAnnouncementsUseCase(),
             )
         }

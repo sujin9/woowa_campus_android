@@ -10,7 +10,7 @@ class GetAllAnnouncementsUseCase(
     private var lastItemId: Long? = null
     private var hasNext: Boolean = true
     private val size: Int
-        get() = if (lastItemId == null) 10 else 5
+        get() = if (lastItemId == null) FIRST_LOAD_SIZE else LOAD_SIZE
 
     suspend operator fun invoke(): List<Announcement> {
         if (!hasNext) return emptyList()
@@ -20,5 +20,10 @@ class GetAllAnnouncementsUseCase(
         hasNext = result.hasNext
 
         return result.announcements.map { it.toDomain() }
+    }
+
+    companion object {
+        private const val FIRST_LOAD_SIZE = 10
+        private const val LOAD_SIZE = 5
     }
 }

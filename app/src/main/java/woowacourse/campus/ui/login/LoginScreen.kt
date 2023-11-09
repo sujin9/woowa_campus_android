@@ -28,17 +28,33 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import woowacourse.campus.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LoginScreen(
     loginViewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
+    navigateToHome: () -> Unit,
+) {
+    val loginState: Boolean by loginViewModel.loginState.collectAsStateWithLifecycle()
+    if (loginState) {
+        navigateToHome()
+    } else {
+        LoginScreenDrawing(loginViewModel, navigateToHome)
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun LoginScreenDrawing(
+    // naming...
+    loginViewModel: LoginViewModel,
     navigateToHome: () -> Unit,
 ) {
     Column(
@@ -53,7 +69,7 @@ internal fun LoginScreen(
             painter = painterResource(
                 id = R.drawable.img_logo,
             ),
-            contentDescription = null,
+            contentDescription = stringResource(R.string.login_logo_image_description),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
@@ -65,7 +81,7 @@ internal fun LoginScreen(
             onValueChange = { password = it },
             placeholder = {
                 Text(
-                    text = "비밀번호를 입력해주세요.",
+                    text = stringResource(R.string.login_hint_password),
                     modifier = Modifier
                         .padding(start = 16.dp),
                     style = MaterialTheme.typography.titleSmall,
@@ -112,7 +128,7 @@ internal fun LoginScreen(
             ),
         ) {
             Text(
-                text = "로그인하기",
+                text = stringResource(R.string.login_button_login),
                 modifier = Modifier.padding(vertical = 16.dp),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.surfaceVariant,
