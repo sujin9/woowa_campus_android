@@ -48,7 +48,13 @@ sealed class BottomNavItem(
     val icon: Int,
     val screenRoute: String,
 ) {
-    data object Home : BottomNavItem(R.string.bottom_navigation_home, R.drawable.ic_home, ScreenRoute.HOME.route)
+    data object Home :
+        BottomNavItem(R.string.bottom_navigation_home, R.drawable.ic_home, ScreenRoute.HOME.route)
+
     data object MyPage :
-        BottomNavItem(R.string.bottom_navigation_my_page, R.drawable.ic_my_page, ScreenRoute.MY_PAGE.route)
+        BottomNavItem(
+            R.string.bottom_navigation_my_page,
+            R.drawable.ic_my_page,
+            ScreenRoute.MY_PAGE.route,
+        )
 }

@@ -52,7 +52,8 @@ internal fun LoginScreen(
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun LoginScreenDrawing( // naming...
+private fun LoginScreenDrawing(
+    // naming...
     loginViewModel: LoginViewModel,
     navigateToHome: () -> Unit,
 ) {

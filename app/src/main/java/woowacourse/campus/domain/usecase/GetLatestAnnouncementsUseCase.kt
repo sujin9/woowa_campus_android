@@ -8,12 +8,13 @@ class GetLatestAnnouncementsUseCase(
     private val announcementRepository: AnnouncementRepository,
 ) {
     suspend operator fun invoke(): List<Announcement> {
-        announcementRepository.getAnnouncements(null, HOME_ANNOUNCEMENTS_SIZE).let { announcements ->
-            return announcements.announcements
-                .map {
-                    it.toDomain()
-                }
-        }
+        announcementRepository.getAnnouncements(null, HOME_ANNOUNCEMENTS_SIZE)
+            .let { announcements ->
+                return announcements.announcements
+                    .map {
+                        it.toDomain()
+                    }
+            }
     }
 
     companion object {
