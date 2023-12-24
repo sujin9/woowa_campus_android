@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class AnnouncementResponse(
     @SerialName("id") val id: Int,
     @SerialName("author") val author: String,
-    @SerialName("content") val content: String,
+    @SerialName("slackChannel") val channel: String,
     @SerialName("createdAt") val createdAt: String,
     @SerialName("title") val title: String,
 )

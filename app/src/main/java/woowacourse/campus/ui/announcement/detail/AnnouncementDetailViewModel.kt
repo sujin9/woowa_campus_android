@@ -1,5 +1,6 @@
 package woowacourse.campus.ui.announcement.detail
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -23,6 +24,7 @@ class AnnouncementDetailViewModel(
     val uiState: StateFlow<AnnouncementDetailUiState> get() = _uiState.asStateFlow()
 
     fun updateUiState(announcementId: Long) {
+        Log.d("123123", "vm: $announcementId")
         viewModelScope.launch {
             runCatching {
                 getAnnouncementByIdUseCase(announcementId)

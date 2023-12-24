@@ -15,12 +15,13 @@ object AnnouncementDataMapper {
         lastCursorId = lastCursorId,
     )
 
+
     fun AnnouncementResponse.toEntity() = AnnouncementEntity(
         id = id.toLong(),
         title = title,
         author = author,
         createdAt = createdAt,
-        content = content,
+        channel = channel
     )
 
     fun AnnouncementDetailResponse.toEntity() = AnnouncementDetailEntity(
@@ -28,5 +29,6 @@ object AnnouncementDataMapper {
         author = author,
         createdAt = createdAt,
         content = content,
+        channel = channel
     )
 }

@@ -44,14 +44,15 @@ class GetAllAnnouncementsUseCaseTest : BehaviorSpec({
         }
     }
 }) {
+
     companion object {
         private val fakeAnnouncements = List(15) { index ->
             AnnouncementEntity(
                 id = index.toLong(),
-                title = "하티 $index",
-                content = "산군 $index",
                 author = "레아",
+                channel = "6기-공지사항",
                 createdAt = "2021-08-20T14:00:00",
+                title = "하티 $index",
             )
         }
 

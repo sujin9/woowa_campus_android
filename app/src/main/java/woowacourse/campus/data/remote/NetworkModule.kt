@@ -8,19 +8,29 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
 
 object NetworkModule {
-    private const val baseUrl = "https://4868ef12-e70d-404f-a10e-7ddf55eb9efa.mock.pstmn.io"
+    private const val baseUrl = "http://192.168.6.25:8080/"
 
+    @OptIn(ExperimentalSerializationApi::class)
     val client = HttpClient(Android) {
         install(Logging) {
             level = LogLevel.ALL
         }
+
         install(ContentNegotiation) {
-            json()
+            json(
+                Json{
+                    this.ignoreUnknownKeys = true
+                    explicitNulls = false
+                }
+            )
         }
+
         defaultRequest {
-            header("password", "asdf")
+            header("Authorization", "Basic MTIzNA==")
             url(baseUrl)
         }
     }

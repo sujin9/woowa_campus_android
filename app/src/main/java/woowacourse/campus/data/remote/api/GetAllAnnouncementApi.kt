@@ -3,7 +3,7 @@ package woowacourse.campus.data.remote.api
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
-import io.ktor.http.path
+import io.ktor.client.request.url
 import woowacourse.campus.data.remote.NetworkModule
 import woowacourse.campus.data.remote.response.AnnouncementsResponse
 
@@ -13,7 +13,7 @@ class GetAllAnnouncementApi {
         size: Int,
     ): AnnouncementsResponse {
         return NetworkModule.client.get {
-            url { path("api/announcements/cursor") }
+            url("api/announcements/cursor")
             parameter("id", lastItemId)
             parameter("size", size)
         }.body()

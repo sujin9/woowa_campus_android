@@ -12,12 +12,13 @@ object AnnouncementDomainMapper {
         author = author,
         createdAt = createdAt,
         content = content,
+        channel = channel,
     )
 
     fun AnnouncementEntity.toDomain() = Announcement(
         id = id,
         title = title,
-        content = content,
+        channel = channel,
         author = author,
         createdAt = createdAt,
     )

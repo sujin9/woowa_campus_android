@@ -16,6 +16,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -88,7 +89,9 @@ private fun AnnouncementList(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onAnnouncementBoardClick() },
+                .clickable {
+                    onAnnouncementBoardClick()
+                },
             verticalAlignment = Alignment.CenterVertically,
         ) {
             HomeContentTitle(stringResource(R.string.home_announcement))
@@ -112,8 +115,10 @@ private fun AnnouncementList(
                     homeUiState.latestAnnouncements.forEach {
                         AnnouncementListItem(
                             title = it.title,
-                            content = it.content,
-                            onClick = { onAnnouncementItemClick(it.id) },
+                            content = it.createdAt,
+                            onClick = {
+                                onAnnouncementItemClick(it.id)
+                            },
                         )
                     }
                 }

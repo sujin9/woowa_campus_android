@@ -5,4 +5,5 @@ data class AnnouncementDetailEntity(
     val content: String,
     val createdAt: String,
     val title: String,
+    val channel: String,
 )

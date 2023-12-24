@@ -1,5 +1,6 @@
 package woowacourse.campus.ui.announcement.detail
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -32,6 +33,7 @@ internal fun AnnouncementDetailScreen(
     id: Long,
     announcementDetailViewModel: AnnouncementDetailViewModel = viewModel(factory = AnnouncementDetailViewModel.Factory),
 ) {
+    Log.d("123123", "screen $id")
     announcementDetailViewModel.updateUiState(id)
     val scrollState = rememberScrollState()
     val uiState: AnnouncementDetailUiState by announcementDetailViewModel.uiState.collectAsStateWithLifecycle()

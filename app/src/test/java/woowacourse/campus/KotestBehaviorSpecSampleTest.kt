@@ -12,7 +12,7 @@ class KotestBehaviorSpecSampleTest : BehaviorSpec({
             Then("산군이 짜증을 낸다") {
                 println("이것은 kotest 샘플이다 이것이야 - !")
                 actual shouldNotBe null
-                actual.shouldBe(0)
+                actual shouldBe(0)
             }
         }
     }
